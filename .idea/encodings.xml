@@ -2,12 +2,10 @@
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/A" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/B" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/framework-core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/framework-db" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/framework-web" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/framewrok-core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/framework-web/src/main/webapp/待完成功能.txt" charset="GBK" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>
