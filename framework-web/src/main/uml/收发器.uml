@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue</OriginalElement>
+  <nodes>
+    <node x="883.9864583333333" y="0.0">com.os.framework.web.intef.zhyy.econtorl.ConLogIntfc</node>
+    <node x="0.0" y="966.0">com.os.framework.quartz.jobs.bundle.zhyy.EContorlJob</node>
+    <node x="0.0" y="173.0">com.os.framework.web.socket.EContorlServer</node>
+    <node x="471.9864583333333" y="0.0">com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface</node>
+    <node x="459.0447916666667" y="751.0">com.os.framework.web.bean.bundle.zhyy.pool.JobBean</node>
+    <node x="325.0" y="265.0">com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue</node>
+    <node x="237.25" y="554.0">com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue" target="com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface">
+      <point x="0.0" y="-73.5" />
+      <point x="516.5" y="148.0" />
+      <point x="533.153125" y="148.0" />
+      <point x="-122.33333333333331" y="61.5" />
+    </edge>
+    <edge source="com.os.framework.web.bean.bundle.zhyy.pool.JobBean" target="com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter">
+      <point x="-55.5" y="-85.0" />
+      <point x="514.5447916666667" y="726.0" />
+      <point x="420.75" y="726.0" />
+      <point x="0.0" y="73.5" />
+    </edge>
+    <edge source="com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter" target="com.os.framework.web.socket.EContorlServer">
+      <point x="-146.79999999999995" y="-73.5" />
+      <point x="273.95000000000005" y="534.0" />
+      <point x="76.25" y="534.0" />
+      <point x="-76.25" y="165.5" />
+    </edge>
+    <edge source="com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter" target="com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue">
+      <point x="0.0" y="-73.5" />
+      <point x="-95.75" y="73.5" />
+    </edge>
+    <edge source="com.os.framework.web.bean.bundle.zhyy.pool.JobBean" target="com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface">
+      <point x="55.5" y="-85.0" />
+      <point x="625.5447916666667" y="726.0" />
+      <point x="729.5" y="726.0" />
+      <point x="729.5" y="148.0" />
+      <point x="777.8197916666667" y="148.0" />
+      <point x="122.33333333333331" y="61.5" />
+    </edge>
+    <edge source="com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue" target="com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter">
+      <point x="95.75" y="73.5" />
+      <point x="612.25" y="524.0" />
+      <point x="494.15" y="524.0" />
+      <point x="73.39999999999998" y="-73.5" />
+    </edge>
+    <edge source="com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter" target="com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface">
+      <point x="146.79999999999995" y="-73.5" />
+      <point x="567.55" y="534.0" />
+      <point x="718.5" y="534.0" />
+      <point x="718.5" y="148.0" />
+      <point x="655.4864583333333" y="148.0" />
+      <point x="0.0" y="61.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="1.025587958607714" x="744.3790019310906" y="704.2311210488872" />
+  <SelectedNodes>
+    <node>com.os.framework.quartz.jobs.bundle.zhyy.EContorlJob</node>
+  </SelectedNodes>
+  <Categories>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+    <Category>Inner Classes</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
