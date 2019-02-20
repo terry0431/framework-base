@@ -1,0 +1,74 @@
+/* CSS Document */
+@charset "utf-8";
+html{color:#626262;background:#ffffff;}
+body,div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, code, form, fieldset, legend, input, button, textarea, p, blockquote, th, td
+{margin:0;padding:0; }
+table{border-collapse:collapse;border-spacing:0;}
+p,ul,li,a,img{margin:0;padding:0;}
+#top_lgbg{ width:100%; height:568px; margin:0 auto;background: url(../index_images/login_bg.gif);clear:both; float:left;}
+
+#top_lg{HEIGHT: 568px; BACKGROUND: url(../index_images/login_01.gif) no-repeat center 0px;
+ }
+ 
+#login_bg{width:100%; height:263px; background:url(../index_images/login_bpt_bg.gif) repeat-x; float:left;}
+
+#login_form {HEIGHT: 263px; WIDTH: 565px; BACKGROUND: url(../index_images/Lg_bot_cbg.gif) no-repeat center 0px; margin:20px auto ;}
+.blank93{ width:100%;height:93px;clear:both;}
+.blank17{ width:100%;height:17px;clear:both;}
+.blank11{ width:100%;height:11px;clear:both;}
+.blank31{ width:100%;height:31px;clear:both;}
+.login_dl{width:356px; height:36px; margin-left:100px;font-family:"΢���ź�";}
+.login_dlsr input{
+color:#626262;
+font-size:14px;
+font-family:"΢���ź�";
+padding-left:5px;
+border:#d7d7d7 1px solid;
+font-size:12px;
+width:267px;
+height:30px;}
+
+#loginbtn{
+margin-top:5px;
+width:139px;
+height:27px;}
+
+#loginbtn input{
+border:0px;
+background: url(../index_images/login_btn.gif) no-repeat;
+width:139px;
+height:27px;}
+
+#cancelbtn{
+margin-top:5px;
+width:139px;
+height:27px;}
+
+#cancelbtn input{
+border:0px;
+background: url(../index_images/cancel_btn.gif) no-repeat;
+width:139px;
+height:27px;}
+
+
+
+#login_bottom{width:100%; height:37px; background: url(../index_images/login_bottom_bg.gif) repeat-x;position:fixed; bottom:0;}
+/*--------------------------------------------*/
+#top_banner{ width:100%; height:81px; margin:0 auto; background:url(../index_images/top_banner_bg.gif); clear:both; float:left;}
+
+#top_banner_pic{HEIGHT:81px; width:887px; background:url(../index_images/top_banner_pic.gif) no-repeat; float:left; margin-left:20px;}
+
+#top_banner_txt{ width:465px; height:51px; float: right;font-family:"΢���ź�"; font-size:12px; margin-top:25px; margin-right:20px;}
+.top_banner_date{width:445px;}
+.top_banner_admin{ width:245px;}
+
+.font_login_org{color:#ff681e;}
+.font_login_org a{color:#ff681e; font-size:12px; text-decoration:none;}
+.font_login_org a:hover{color:#ff681e;}
+
+.font_login_blue{color:#335d99;}
+.font_login_blue a{color:#335d99; font-size:12px; text-decoration:none;}
+.font_login_blue a:hover{color:#ff681e;}
+
+#login_banner_bg{width:100%; height:11px;background:url(../index_images/login_banner_bg02.gif) repeat-x;  float:left;}
+.login_banner_btnbg{ background-image:url(../index_images/login_banner_btnbg.gif); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;}

@@ -1,0 +1,67 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>AAA</title>
+        <!-- meta使用viewport以确保页面可自由缩放 -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- 引入 jQuery Mobile 样式 -->
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <!-- 引入 jQuery 库 -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <!-- 引入 jQuery Mobile 库 -->
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    </head>
+    <body>
+        <div data-role="header" >
+            <h1>首页</h1>
+        </div>
+        <div data-role="content" >
+            <div id="kt_ggw" style="background:url(images/aaa.png) 50% 0 no-repeat;background-size:cover;height: 50px">广告位</div>
+            <fieldset data-role="fieldcontain">
+                <label for="delivery">测试科目:</label>
+                <select name="delivery" id="delivery">
+                    <option value="barcode" selected="selected">全部</option>
+                    <option value="nfc">二级轮机长</option>
+                    <option value="overnight">三级船长</option>
+                    <option value="express">...</option>
+                </select>
+            </fieldset>
+            <div>
+            <button>复习全部错题</button>
+            </div>
+            <div>
+                <h4>历史成绩</h4>
+                <ul data-role="listview">
+                    <li data-role="list-divider">2017年8月7日</li>
+                    <li>考试科目：轮机长</li>
+                    <li>分数：78</li>
+                    <li><a href="#">错题数：7道<span class="ui-li-count">复习错题</span></a></li>
+                </ul>
+                <p></p>
+                <ul data-role="listview">
+                    <li data-role="list-divider">2017年8月7日</li>
+                    <li>考试科目：轮机长</li>
+                    <li>分数：78</li>
+                    <li><a href="#">错题数：7道<span class="ui-li-count">复习错题</span></a></li>
+                </ul>
+                <p></p>
+                <ul data-role="listview">
+                    <li data-role="list-divider">2017年8月7日</li>
+                    <li>考试科目：轮机长</li>
+                    <li>分数：78</li>
+                    <li><a href="#">错题数：7道<span class="ui-li-count">复习错题</span></a></li>
+                </ul>
+            </div>
+        </div>
+        <div data-role="footer" data-position="fixed" >
+            <div data-role="navbar">
+                <ul>
+                    <li><a data-ajax="false" href="index.html">首页</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">模拟考试</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">在线学习</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">在线练习</a></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+<title>输水控制</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet"	href="css/reset.css" />
+<link rel="stylesheet"	href="css/default.css" />
+<link rel="stylesheet"	href="css/style.css" />
+
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+            var pagelistsize = 10;
+            var num = 0;
+            var groupnum = 0; //当前池塘组 （当前分页 页数）
+            var target_impvalue = 0;//当前池塘号
+            //var maxnum ; //同时开启开关最大数   -> $("#concurrentNum").val()
+            var sbtd; //设备通道集合
+	        var sbnum = 18;//当前可控制的有效设备数
+	        var settimedata = new Array(pagelistsize);//记录当前页面设备输水时间
+	        var swnum = 2;// 顺位数2  当设备1号的情况从3通道开始
+	        var cnum; //当前剩余任务数
+	        
+	        var getkgflag_url = "ifs/econtrol/econtrol/getKgFlag"; //获取开关状态
+	        var sbtd; //设备通道集合
+            $(function () {
+            	sbtd = new Array();
+                sbtd.push(8-2); //1号设备 0-7  去掉2个主阀控制 之后为池塘开关控制 2-7
+                sbtd.push(12); //2号设备 增加扩展为12个口 0-11
+                
+                $('#btn_set').bind('click', function(){
+                    settimedata[target_impvalue] = $("#imptime").val();
+                    $("#imptime").val("");
+                    $("#a_" + (target_impvalue + 1) ).html((target_impvalue + 1)  +"号池塘  " + settimedata[target_impvalue] + "秒");
+                });
+                $('#btn_pre').bind('click', function(){
+                    updateGroup(-1);
+                });
+                $('#btn_next').bind('click', function(){
+                    updateGroup(1);
+                });
+                initList();
+                //$("#p_msg").show();
+            })
+            
+            function loadkgflag(){
+	            $.ajax({
+	                url: getkgflag_url,
+	                data: {
+	                },
+	                type: 'POST',
+	                timeout: 15000,
+	                dataFilter: function (json) {
+	                    console.log("jsonp.filter:" + json);
+	                    return json;
+	                },
+	                success: function (json, textStatus) {
+	                    //<img src="<%=path%>/images/oicn_6.gif" /><a href="javascript:cgkg(2,1,1)">打开</a>
+	                    
+	                    if (json != "") {
+	                        for(zjnum in json){
+	                            var zjn = parseInt(zjnum); //设备号  
+	                            var qsn = getQsnum(zjn);   //起始号
+	                            console.log("jsonp.filter:" + json[zjn].join("-") );
+	//                            var n = sbtd[zjn];
+	//                                if(zjn == 0){
+	//                                    n = n - 2;
+	//                                }
+	                            var j = sbtd[zjn];
+	//                            if(zjn == 0){
+	//                                j = j + 2;
+	//                            }
+	                            if(zjn == 0){
+	                                if(json[zjn][7] == 0){
+	                                	$("#elc_1").html("<img src=\"../images/oicn_6a.gif\" />&nbsp;&nbsp;<a tabindex=\"-1\" href=\"javascript:sendMsg(-1,1)\">打开</a>");
+	                                }else{
+	                                	$("#elc_1").html("<img src=\"../images/oicn_6.gif\" />&nbsp;&nbsp;<a tabindex=\"-1\" href=\"javascript:sendMsg(-1,2)\">关闭</a>");
+	                                }
+	                                if(json[zjn][6] == 0){
+	                                    $("#elc_2").html("<img src=\"../images/oicn_6a.gif\" />&nbsp;&nbsp;<a tabindex=\"-1\" href=\"javascript:sendMsg(0,1)\">打开</a>");  
+	                                }else{
+	                                    $("#elc_2").html("<img src=\"../images/oicn_6.gif\" />&nbsp;&nbsp;<a tabindex=\"-1\" href=\"javascript:sendMsg(0,2)\">关闭</a>");
+	                                }
+	                            }
+	                            for(var i = sbtd[zjn]; i > 0 ;i --){
+	                                //alert(json[zjn][i]);
+	                                
+	                                if(json[zjn][i - 1] == 0){
+	                                    $("#kg_" + qsn).html("<img src=\"../images/oicn_6a.gif\" />&nbsp;&nbsp;<a tabindex=\"-1\" href=\"javascript:sendMsg("+qsn+",1)\">打开</a>");  
+	                                }else{
+	                                    $("#kg_" + qsn).html("<img src=\"../images/oicn_6.gif\" />&nbsp;&nbsp;<a tabindex=\"-1\" href=\"javascript:sendMsg("+qsn+",2)\">关闭</a>");
+	                                }
+	                                j --;
+	                                qsn ++;
+	                            }
+	                        }
+	                    }
+	                },
+	                error: function (XMLHttpRequest, textStatus, errorThrown) {
+	                    console.log("jsonp.error:" + XMLHttpRequest.returnCode);
+	                }
+	            });
+	        }
+            
+            function initList(){
+//                $("#test").html("<select id=\"sel_1\"  data-mini=\"true\">" + 
+//                    "<option value=\"off\">No</option><option value=\"on\" selected=\"\">Yes</option></select>");
+//                $("#test").trigger( "create" );
+//                   $('#sel_1').trigger( "create",true  );
+//                   $("#sle_1").selectmenu("refresh");
+                var ctstr = ""; //池塘列表内容
+                var datasize = (groupnum + 1) * pagelistsize;
+                if(datasize > sbnum){
+                    datasize =  sbnum ;
+                } 
+                for(var i = (groupnum * pagelistsize) + 1;i <= datasize ;i ++){//power-black forbidden-black
+                    //ctstr += "<li data-role=\"fieldcontain\" class=\"ui-li\"><label class=\"cd-label\" >"+i+"号池塘</lable>"+
+                    //		"<input  type=\"text\" id=\"inp_"+i+"\" />" + 
+                    //        "<span id=\"kg_+i+\"></span>";
+                	ctstr += "<div class=\"colorarea_div\" style=\"margin: 5px 5px 5px 5px;\" id=\"ct_+i+\">"+i+"号池塘</div>";
+                    
+                }
+                $("#ctlist").html(ctstr);
+                
+                $("#ctlist").listview('refresh');
+                $("#ctlist").trigger( "create" );
+                for(var i = (groupnum * pagelistsize) + 1;i <= datasize ;i ++){//power-black forbidden-black
+                    $('#sel' + i).trigger( "create" );
+                }
+                
+                cleardata();//清空当前设置的时间数据
+            }
+            function onoff(sbnum){
+            	alert(sbnum);
+            }
+            //与设备状态同步中为黄色  同步成功为绿色 同步失败为红色
+            function colorBuild(sbnum){
+            	
+            }
+            function setImpValue(value){
+                value --;
+                target_impvalue = value;//当前设置的池塘号
+                if(settimedata[value] != null){
+                    $("#imptime").val(settimedata[value]);
+                }else{
+                    $("#imptime").val("");
+                }
+            }
+            
+            function updateGroup(type){
+                groupnum =  groupnum + type;
+                if(groupnum < 0 ){
+                    groupnum = 0;
+                    return ;
+                }
+                var pcount = 0;
+                if(sbnum % pagelistsize == 0){
+                    pcount = sbnum / 12;
+                }else{
+                    pcount = parseInt(sbnum / 12) + 1; 
+                }
+                alert(pcount);
+                if(groupnum >= 0 &&  groupnum < pcount){
+                    initList();
+                }else{
+                    groupnum = groupnum - 1;
+                }
+            }
+            function cleardata(){
+                settimedata = new Array(12);
+            }
+        </script>
+</head>
+<body>
+	<div class="container">
+		
+		<div data-role="main" class="container">
+		
+		<form class="cd-form floating-labels">
+			<div id="setting_div">
+				<label class="cd-label"  >输水时间</label>
+				<input class="icon" type="text" style="width:60%;display: inline;" id="concurrentNum" value="4" />秒
+				<label class="cd-label"  >手动控制</label>
+				<span id="elc_2"><img  src="../images/oicn_6a.gif" />&nbsp;&nbsp;<a tabindex="-1" href="javascript:sendMsg(-1,1)">打开</a></span>
+			</div>
+			<fieldset>
+				<legend>输水控制</legend>
+				<div id="errmsg" class="error-message">
+					<!-- <p>error....</p> -->
+				</div>
+				<div >
+					<label class="cd-label"  >最大并发数</label>
+					<input class="icon" type="text" id="concurrentNum" value="4" />
+			    </div> 
+				<div>
+					<h4>选择饵料池</h4>
+
+					<ul class="cd-form-list">
+						<li>
+							<input type="radio" name="elc" id="elc_1" value="1" />
+							<label for="elc_1">1号饵料池</label>
+							<span id="elc_1"><img src="../images/oicn_6a.gif" />&nbsp;&nbsp;<a tabindex="-1" href="javascript:sendMsg(-1,1)">打开</a></span>
+						</li>
+						<li>
+							<input type="radio" name="elc" id="elc_2" value="2" />
+							<label for="elc_2">2号饵料池</label>
+							<span id="elc_2"><img  src="../images/oicn_6a.gif" />&nbsp;&nbsp;<a tabindex="-1" href="javascript:sendMsg(-1,1)">打开</a></span>
+						</li>
+					</ul>
+				</div>
+
+				<div id="ctlist">
+				</div>
+			</fieldset>
+			<fieldset>
+				<input type="button" value="上一组" id="btn_pre" /> 
+				<input type="button" value="下一组" id="btn_next" />
+			</fieldset>
+			<div>
+				<input type="button" value="开始执行">
+			</div>
+			</form>
+		</div>
+		
+		<!--        
+            <div data-role="footer" data-position="inline">
+                <h1>智慧渔业信息管理平台</h1>
+            </div>-->
+	</div>
+</body>
+</html>

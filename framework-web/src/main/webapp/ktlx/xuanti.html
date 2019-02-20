@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟考试-选题</title>
+    <!-- meta使用viewport以确保页面可自由缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 引入 jQuery 库 -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    
+    <script src="../js/Base.js"></script>
+    
+    <!-- 引入 jQuery Mobile 样式 -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    
+    <!-- 引入 jQuery Mobile 库 -->
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    
+</head>
+<body>
+    <div data-role="header" >
+        <h1>模拟考试-选题</h1>
+    </div>
+    <div data-role="content" >
+        <fieldset data-role="fieldcontain">
+            <label for="delivery">测试科目:</label>
+       
+            <button onclick="dati(23)"  >二级轮机长</button>
+            <button onclick="dati(22)"  >二级船副</button>
+            <button onclick="dati(21)"  >二级船长</button>
+            <button onclick="dati(24)"  >二级管轮</button>
+            <button onclick="dati(17)"  >三级船长</button>
+            <button onclick="dati(19)"  >三级轮机长</button>
+            <button onclick="dati(18)"  >助理船副</button>
+            <button onclick="dati(20)"  >助理管轮</button>
+            <button onclick="dati(15)"  >机驾长</button>
+            <button onclick="dati(16)"  >普通船员</button>
+            
+        </fieldset>
+    </div>
+    <div data-role="footer" data-position="fixed" >
+        <div data-role="navbar">
+            <ul>
+                    <li><a data-ajax="false" href="index.html">首页</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">模拟考试</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">在线学习</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">在线练习</a></li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {  
+            
+        });
+        function dati(val){
+
+            $.mobile.changePage("lianxi.html",{
+                data:{zhiwu:val}
+            });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>练习</title>
+    <!-- meta使用viewport以确保页面可自由缩放 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 引入 jQuery Mobile 样式 -->
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+    <!-- 引入 jQuery 库 -->
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- 引入 jQuery Mobile 库 -->
+    <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+    <script src="../js/Base.js"></script>
+    <script src="../js/exam/lianxi.js"></script>
+</head>
+<body>
+<div data-role="page" id="page_lianxi">
+    <script>
+        var exam_getKaotiUrl = baseURL + "exam/getKaoti";
+        var kaotilist = new Array();
+        var c_tk_num = 0;
+        var c_da_num = 0;
+        var snum = 0;
+        var obj = "";
+        function getKaoti(zhiwu){
+            $.ajax({
+                url: exam_getKaotiUrl,
+                type: 'POST',
+                async : false,
+                //dataType:'JSONP',
+                data: {"zhiwu":zhiwu},
+                success: function(data){
+                    kaotilist = data;
+                    //alert("kaotilist.length"+kaotilist.length);
+                    for(obj in kaotilist["optmap"]){
+                        //alert("obj:"+obj + " obj val:" + JSON.stringify(kaotilist[obj] ));
+                        $("#s_kemu").append("<option value=\""+obj+"\">"+kaotilist["optmap"][obj]+"</option>");
+                    }
+                    obj = "all";
+                    initTiku();
+                    nextKaoti();
+                },
+                error: function(data){
+                    alert("error: " + JSON.stringify(data) );
+                }
+            });
+            //nextKaoti();
+        }
+        function initTiku(){
+            var tmpid = "";
+            //alert("obj:"+obj + " obj val:" + kaotilist["listmap"][obj].length + JSON.stringify(kaotilist["listmap"][obj] ) + "kaotilist[obj].length:" );
+            for(var i = 0;i < kaotilist["listmap"][obj].length;i ++){
+                if(tmpid == ""){
+                    tmpid = kaotilist["listmap"][obj][i].id;
+                    snum ++;
+                }else{
+                    if(tmpid != kaotilist["listmap"][obj][i].id ){
+                        tmpid = kaotilist["listmap"][obj][i].id;
+                        snum ++;
+                    }
+                }
+            }
+        }
+        function nextKaoti(){
+            if( c_tk_num < snum ){
+                $("#div_tk").empty();
+                $("#f_daan").empty();
+                $("#kt_daan").empty();
+
+                //<label for="daan_1">A.答案1。。。。。。。。。。。。。。。。。。。。。。。</label>
+                //<label for="daan_2">B.答案2。。。。。。。。。。。。。。。。。。。。。。。</label>
+                //<label for="daan_3">C.答案3。。。。。。。。。。。。。。。。。。。。。。。</label>
+                //<label for="daan_4">D.答案4。。。。。。。。。。。。。。。。。。。。。。。</label>
+                var tmpid = kaotilist["listmap"][obj][c_da_num].id;
+
+                $("#div_tk").append("第"+(c_tk_num+1)+"题：" + kaotilist["listmap"][obj][c_da_num].t_wenti);
+                $("#kt_daan").append("正确答案：" + kaotilist["listmap"][obj][c_da_num].t_daan);
+                while(kaotilist["listmap"][obj][c_da_num].id == tmpid){
+                    $("#f_daan").append("<label>"+kaotilist["listmap"][obj][c_da_num].d_xuanxiangbiaohao+"."+kaotilist["listmap"][obj][c_da_num].d_xuanxiangneirong +"</label>");
+                    c_da_num ++;
+                }
+                c_tk_num ++;
+            }else{
+                //结束
+            }
+        }
+        function kemuChange(){
+            c_tk_num = 0;
+            c_da_num = 0;
+            snum = 0;
+            obj = $("#s_kemu").val();
+            initTiku();
+            nextKaoti();
+        }
+        function init(){
+            //var url = $.url(document.location);
+            //alert(url);
+            //var zhiwu = url.param("zhiwu");
+
+            var zhiwu = getRequestParam("zhiwu");
+            getKaoti(zhiwu);
+        }
+
+        $(function(){ 
+            //init();
+            //$("#a").click(function(){ 
+                //adding your code here 
+            //}); 
+
+        }); 
+        
+        $("#page_lianxi").bind("pageshow", function(event){
+                //var url = $.url(document.location);
+                //var arg1 = url.param("arg1");
+                init();
+        });
+    </script>
+<div data-role="header" >
+    <h1>联系</h1>
+</div>
+<div data-role="content" >
+    <div id="kt_ggw" style="background:url(images/aaa.png) 50% 0 no-repeat;background-size:cover;height: 50px">广告位</div>
+    <fieldset>
+        <label>选择科目：</label>
+        <select id="s_kemu" onchange="kemuChange()">
+            <option value="all">全部</option>
+        </select>
+    </fieldset>
+    <div id="div_tk"></div>
+    <div><button>语音阅读</button></div>
+    <fieldset id="f_daan">
+    </fieldset>
+    <label id="kt_daan"></label>
+    <button onclick="nextKaoti();" id="btn_next" >下一题</button>
+</div>
+<div data-role="footer" data-position="fixed" >
+    <div data-role="navbar">
+        <ul>
+                    <li><a data-ajax="false" href="index.html">首页</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">模拟考试</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">在线学习</a></li>
+                    <li><a data-ajax="false" href="xuanti.html">在线练习</a></li>
+        </ul>
+    </div>
+</div>
+</div>
+
+</body>
+</html>
