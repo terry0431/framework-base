@@ -124,7 +124,6 @@ public class EContorlServer {
                                             //0201023f00ec0c
                                             zj = Integer.parseInt( tmp.substring(0,2) ) - 1;
                                             str2 = BinaryConversionUtil.hexStringToBinaryString(tmp.substring(6,tmp.length() - 4));
-                                            //str2 =  StringUtil.hexString2binaryString(tmp.substring(6,tmp.length() - 4));
                                             ecinf.updateSbflag(zj, str2);
 //                                            str16 = intToHex(Integer.parseInt(tmp.substring(6,10)) );
                                             

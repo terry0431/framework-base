@@ -27,11 +27,30 @@ public class MsgDelayQueue {
 	}
 	
 	/**
-	 *	 插入队列
+	 * 插入队列
 	 * @param delayed
 	 */
 	public void offer(String rtuid,MsgDelayed delayed) {
 		jmrtuqueue.get(rtuid).offer(delayed);
+	}
+	
+	/**
+	 * 等待下一个延时时间
+	 * @param rtuid
+	 * @return
+	 * @throws InterruptedException
+	 */
+	public MsgDelayed waitDelayTime(String rtuid) throws InterruptedException {
+		
+		return jmrtuqueue.get(rtuid).peek();
+	}
+	
+	/**
+	 * 清空指定队列
+	 * @param rtuid
+	 */
+	public void clearDelay(String rtuid) {
+		jmrtuqueue.get(rtuid).clear();
 	}
 	
 	/**

@@ -3,9 +3,12 @@ package com.os.framework.web.bean.bundle.zhyy.pool;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface;
 import com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter;
+import com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue;
+import com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayed;
 
 /**
  * 输水任务执行
@@ -28,6 +31,7 @@ public class JobBean {
 			public void run() {
 				// TODO Auto-generated method stub
 				Job job = runmap.get(rtuid);
+				job.setRuntime(System.currentTimeMillis() );
 				count = job.getJobinfo().length ;
 				
 				try {
@@ -53,14 +57,15 @@ public class JobBean {
 //					Integer[] lasttime = new Integer[concurrentNum];
 					//int i = 0;
 					CountDownLatch threadSignal = new CountDownLatch(job.getJobinfo().length);//初始化countDown  
-					
+					MsgDelayed delayed = null;
+					long delayedtime = 0; 
 					for(int i = 0;i < job.getJobinfo().length ;i ++) {
 						System.out.println("linenum:"+ linenum);
 						if(linenum < job.getConcurrentNum()) {
+							linenum ++;
 							new Thread(new Runnable() {
 								@Override
 								public void run() {
-									linenum ++;
 									int thiscount = job.getJobinfo().length - (count-- );
 									System.out.println("任务"+ thiscount +"开始");
 									try {
@@ -113,6 +118,21 @@ public class JobBean {
 //									}
 								}
 							},"mythread_job").start(); 
+						}else {
+							System.out.println("等待开启下个任务==========");
+							delayed = MsgDelayQueue.getInstance().waitDelayTime(rtuid);
+							if(delayed == null) {
+								Thread.sleep(1000);
+							}else {
+								delayedtime = delayed.getDelay(TimeUnit.MILLISECONDS);
+								System.out.println("下个任务延时==========" + delayedtime);
+								if(delayedtime > 0) {
+									Thread.sleep( delayedtime );
+								}else {
+									Thread.sleep(1000);
+								}
+							}
+							i --;
 						}
 					}
 					threadSignal.await();//等待所有线程执行完毕
@@ -131,10 +151,17 @@ public class JobBean {
 					},"mythread_elc");
 					maint.start();
 					maint.join();
-					runmap.get(rtuid).setRun_state(false);
+					//runmap.get(rtuid).setRun_state(false);
+					runmap.remove(rtuid);
 					System.out.println("====  全部任务结束  ======");
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
+					System.out.println("清空任务队列 停止执行操作==========" );
+					MsgDelayQueue.getInstance().clearDelay(rtuid); //清空任务队列 停止执行操作
+					if(runmap != null) {
+						System.out.println("清空任务信息==========" );
+						runmap.remove(rtuid); //清空任务信息
+					}
 					e.printStackTrace();
 				}
 			}

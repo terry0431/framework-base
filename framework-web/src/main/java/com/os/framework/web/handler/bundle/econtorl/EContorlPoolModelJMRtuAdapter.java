@@ -1,18 +1,24 @@
 package com.os.framework.web.handler.bundle.econtorl;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.quartz.JobKey;
+
+import com.os.framework.core.util.BinaryConversionUtil;
 import com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayQueue;
 import com.os.framework.web.queue.bundle.zhyy.econtorl.MsgDelayed;
 import com.os.framework.web.queue.bundle.zhyy.econtorl.MsgQueue;
 import com.os.framework.web.socket.EContorlServer;
+import com.os.framework.web.socket.NIOServer;
 import com.os.framework.web.util.crc.CRCUtil;
 
 public class EContorlPoolModelJMRtuAdapter implements EContorlAdapterInterface {
-	
-	MsgDelayed delayerd = null; 
 
+	MsgDelayed delayerd = null; 
 	@Override
 	public String sendMsg(String rtuid, String msg) {
 		if(msg.isEmpty() ) {
@@ -41,7 +47,7 @@ public class EContorlPoolModelJMRtuAdapter implements EContorlAdapterInterface {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public void switchControl(String rtuid, int equipmentNum,Integer lineNum, Integer type,long time) throws Exception{
 		// TODO Auto-generated method stub
@@ -80,7 +86,7 @@ public class EContorlPoolModelJMRtuAdapter implements EContorlAdapterInterface {
 		Map<String,String> m = new HashMap();
 		m.put(rtuid, msg);
 		//加入队列
-		
+
 		//MsgQueue.getInstance().addMsg(rtuid, m);
 		delayerd = new MsgDelayed(time, m);
 		MsgDelayQueue.getInstance().offer(rtuid, delayerd);
@@ -90,9 +96,46 @@ public class EContorlPoolModelJMRtuAdapter implements EContorlAdapterInterface {
 		return ;
 	}
 
+
 	@Override
 	public Map<String, Object> getState(String rtuid) {
-		// TODO Auto-generated method stub
+		//EContorlServer eserver = new EContorlServer();
+		List<Integer> sblist = new ArrayList();
+		sblist.add(8 - 2); // 第一个设备 前2个通路被总控制占用了 池塘开关设备顺序从3开始 
+		sblist.add(12); //第2个设备
+		String sb = "";
+		String td = "";
+		String flag = "0000";
+		String msg = "";
+		for (int i = 0; i < sblist.size(); i++) {//设备循环
+			if((i+1) < 10){
+				sb = "0" + (i+1) + "01";
+			}else{
+				sb = BinaryConversionUtil.intToHex(i + 1) + "01";
+			}
+			if(i == 0){
+				td = "00" + BinaryConversionUtil.intToHex(sblist.get(i) + 2 );
+			}else{
+				td = "00" + BinaryConversionUtil.intToHex(sblist.get(i) );
+			}
+
+			msg = sb + flag + td ;
+
+			byte[] bytes = CRCUtil.hexToByteArray(msg);
+			msg += CRCUtil.getCRC3(bytes);
+			try{
+				Map<String,String> m = new HashMap();
+				m.put(rtuid, msg);
+				//加入队列
+				delayerd = new MsgDelayed(0, m);
+				MsgDelayQueue.getInstance().offer(rtuid, delayerd);
+
+				//                	eserver.doWrite("hongyuan", msg);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+
+		}
 		return null;
 	}
 

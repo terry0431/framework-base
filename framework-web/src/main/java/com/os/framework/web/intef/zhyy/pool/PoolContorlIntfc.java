@@ -77,14 +77,28 @@ public class PoolContorlIntfc {
     	}
         return sbztmap;
     }
-    
+
     /**
-     * @param jobinfo	任务执行信息  设备编号-设置时间
-     * @param swnum		顺位数
-     * @param sbtd		设备通道
-     * @param concurrentNum	并发数
      * @return
      */
+    @RequestMapping(value = {"/ifs/econtrol/econtrol/runJob"}, method = {POST})
+    @ResponseBody
+    public String runJob() {
+        return runJob();
+    }
+
+
+
+
+
+    /**
+      * @Description:执行输水任务
+      * @Param:* @param josnStr Job json
+      * @return:java.lang.String 成功返回1  出错返回-1
+      * @Author:wangbo
+      * @Date:2019-02-20
+      * @Time:16:32
+    **/
     @RequestMapping(value = {"/ifs/econtrol/econtrol/runJob"}, method = {POST})
     @ResponseBody
     public String runJob(String josnStr) {
@@ -127,6 +141,9 @@ public class PoolContorlIntfc {
     @ResponseBody
     public Job getJob(String rtuid, HttpServletRequest request) {
         Job job = JobBean.getJob(rtuid);
+        if(job != null) {
+        	job.setCurrenttime(System.currentTimeMillis());
+        }
         return job; 
     }
     @RequestMapping(value = {"/ifs/econtrol/econtrol/sendData"}, method = {POST})

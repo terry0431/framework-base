@@ -53,7 +53,10 @@ a{ text-decoration:none}
             var elc = "";
             
             $(function () {
-            	
+            	//$("#runjob").prop('disabled','').addClass("ui-disabled").button('refresh');
+            	//$("#runjob").attr('disabled','disabled').button('refresh');
+            	//$("#id").prop('disabled',false).removeClass("ui-disabled");
+            	//$("#runjob").attr('disabled','disabled').checkboxradio('refresh'); ;
             	sbtd = new Array();
                 sbtd.push(8-2); //1号设备 0-7  去掉2个主阀控制 之后为池塘开关控制 2-7
                 sbtd.push(12); //2号设备 增加扩展为12个口 0-11
@@ -107,28 +110,109 @@ a{ text-decoration:none}
 	                		if(json.run_state){//当前有任务
 	                			console.log("job state ---- :" + json["run_state"]);
 	                			clearCt();
+	                			$("#runjob").attr('disabled','disabled').button('refresh');
 	                			//加载任务信息 显示倒计时
+	                			$("#concurrentNum").val(json.concurrentNum);
+	                			if(json.elcnum == 1){
+		                            $("input[name='elc']:first").prop("checked",true).checkboxradio('refresh'); 
+		                            $("input[name='elc']:first").attr("checked",true).checkboxradio('refresh'); 
+		                            $("input[name='elc']:last").attr("checked",false).checkboxradio('refresh'); 
+		                            $("input[name='elc']:last").prop("checked",false).checkboxradio('refresh');
+	                			}else{
+	                				$("input[name='elc']:first").prop("checked",false).checkboxradio('refresh'); 
+		                            $("input[name='elc']:first").attr("checked",false).checkboxradio('refresh'); 
+		                            $("input[name='elc']:last").attr("checked",true).checkboxradio('refresh'); 
+		                            $("input[name='elc']:last").prop("checked",true).checkboxradio('refresh');
+	                			}
+	                			
+	                            
+	                			//$("input[name='radioName'][value=2]").attr("checked",true); 
+	                			//$("#r_elc_2").attr('checked','true');
 	                			var ctnum;
 	                			alldata = new Array();
-	                			for(var i = 0;i < json.jobinfo.length;i ++){
-	                				ctnum = getCtnumByLinenum(json.lineNum[i],json.equipmentNum);
-	                				settimedata[ctnum] = json.jobinfo[i];
-	                				alldata.push(i);
+	                			var executedtime = parseInt( (json.currenttime - json.runtime) / 1000 );
+	                			
+	                			//var concurrentval ; //计算用存储器
+	                			var jtime = json.jobinfo; //计算用副本
+	                			var ztime = json.jobinfo; //解析用副本
+	                			var cnum; //循环并发数
+	                			var ii = 0;//next jtime 数组位
+	                			//var incnum = 0;//记录已经完成任务数
+	                			var mixnum = 0;//计算用数组内的最小值
+	                			//var clearjob = new Array();//已完成的任务
+	                			var jtimelength = 0;
+	                			while(executedtime > 0){
+	                				jtimelength = 0;
+	                				for(var j = 0;j < jtime.length;j ++){
+            							if(jtime[j] > 0){
+            								jtimelength ++;
+            							}
+            						}
+	                				if(jtimelength == 0 ){
+	                					alert("全部完成");
+	                					return ;
+	                				}
+	                				if(jtimelength >= json.concurrentNum){ //如果任务数大于并发数 
+	                					cnum = json.concurrentNum;
+	                				}else{
+	                					cnum = jtimelength;
+	                				}
+	                				
+	                				ii = 0;
+	                				//取最小值
+	                				mixnum = jtime.min();
+	                				//alert(mixnum);
+	                				//如果最小值大于任务已执行时间 循环剩余任务时间数组 减去 任务已执行时间
+	                				if(mixnum > executedtime){
+	                					//for(var i = 0;i < cnum;i ++){
+	                						for(var j = 0;j < jtime.length;j ++){
+	                							if(jtime[j] > 0){
+	                								jtime[j] = jtime[j] - executedtime;
+	                								ii ++;
+	                							}
+	                							if(ii == cnum){
+		                							break ;
+		                						}
+	                						}
+	                						break;
+		                				//}
+	                				}else{
+	                					executedtime = executedtime - mixnum;
+	                					for(var j = 0;j < jtime.length;j ++){
+                							if(jtime[j] > 0){
+                								jtime[j] = jtime[j] - mixnum;
+                								ii ++;
+                							}
+                							if(ii == cnum){
+	                							break;
+	                						}
+                						}
+	                				}
 	                			}
-	                			cnum = json.jobinfo.length.length;
-		                          var xhnum = 0;
+	                			//alert(jtime);
+	                			for(var i = 0;i < jtime.length;i ++){
+	                				ctnum = getCtnumByLinenum(json.lineNum[i],json.equipmentNum);
+	                				if(jtime[i] > 0){
+	                					
+		                				settimedata[ctnum] = jtime[i];
+		                				alldata.push(ctnum + 1);
+	                				}else{
+	                					$("#cont_"+(ctnum + 1) ).html("已完成");
+	                				}
+	                			}
+	                			cnum = jtime.length;
+		                        var xhnum = 0;
 		                          
-		                          if(cnum < parseInt($("#concurrentNum").val() ) ){
-		                              xhnum = cnum;
-		                          }else{
-		                              xhnum = parseInt($("#concurrentNum").val() ) ;
-		                          }
-		                          //resetTime(inpnum,$("#inp_" + inpnum).val());
-		                          for(var i = 1;i <= xhnum;i ++){
-		                              //cnum ++;
-		                              var inpnum = alldata.shift();
-		                              resetTime(inpnum,settimedata[inpnum-1]);
-		                          }
+		                        if(cnum < json.concurrentNum ){
+		                            xhnum = cnum;
+		                        }else{
+		                            xhnum = json.concurrentNum  ;
+		                        }
+		                        
+		                        for(var i = 1;i <= xhnum;i ++){
+		                            var inpnum = alldata.shift();
+		                            resetTime(inpnum,settimedata[inpnum-1]);
+		                        }
 	                		}
 	                		return true;
 	                	}
@@ -139,11 +223,12 @@ a{ text-decoration:none}
 	            });
 	        }
             function clearCt(){
-            	for(var i = 1;i <= settimedata.length;i ++){
-            		if(settimedata[i-1] != "" && parseInt(settimedata[i-1]) > 0){
-            			$("#cont_" + (target_impvalue + 1) ).empty();
-            		}
-            	}
+//             	for(var i = 1;i <= alldata.length;i ++){
+//             		if(settimedata[i-1] != "" && parseInt(settimedata[i-1]) > 0){
+//             			$("#cont_" + (target_impvalue + 1) ).empty();
+//             		}
+//             		$("#cont_" + alldata[i] ).empty();
+//             	}
             	settimedata = new Array();//清空池塘设置
             }
             function getCtnumByLinenum(linenum,zjnum){
@@ -366,6 +451,7 @@ a{ text-decoration:none}
 //             	private Integer elcnum;//饵料池号
 //             	private Integer concurrentNum; //并发数
 //             	private Integer[] equipmentNum;
+
                 var job = new Object();
                 job.elcnum = parseInt(elc);
                 job.concurrentNum = parseInt($("#concurrentNum").val());
@@ -403,6 +489,9 @@ a{ text-decoration:none}
                     alert("请输入操作内容后执行");
                     return; 
                 }
+                $("#runjob").attr('disabled','disabled').button('refresh');
+                //锁定执行按钮
+                
                 $.ajax({
                     url: runjob_url,
                     data: {josnStr:JSON.stringify(job)
@@ -410,27 +499,29 @@ a{ text-decoration:none}
                     type: 'POST',
                     timeout: 15000,
                     success: function (json, textStatus) {
-                            alert(json);
+                            //alert(json);
                             if(json == "-1"){
                             	checkjob();
+                            }else{
+	                            var xhnum = 0;
+	                            if(alldata.length < parseInt($("#concurrentNum").val() ) ){
+	                                xhnum = alldata.length;
+	                            }else{
+	                                xhnum = parseInt($("#concurrentNum").val() ) ;
+	                            }
+	                            //resetTime(inpnum,$("#inp_" + inpnum).val());
+	                            for(var i = 1;i <= xhnum;i ++){
+	                                //cnum ++;
+	                                var inpnum = alldata.shift();
+	                                resetTime(inpnum,settimedata[inpnum-1]);
+	                            }
                             }
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         console.log("jsonp.error:" + XMLHttpRequest.returnCode);
                     }
                 });
-//                 var xhnum = 0;
-//                 if(alldata.length < parseInt($("#concurrentNum").val() ) ){
-//                     xhnum = alldata.length;
-//                 }else{
-//                     xhnum = parseInt($("#concurrentNum").val() ) ;
-//                 }
-//                 //resetTime(inpnum,$("#inp_" + inpnum).val());
-//                 for(var i = 1;i <= xhnum;i ++){
-//                     //cnum ++;
-//                     var inpnum = alldata.shift();
-//                     resetTime(inpnum,settimedata[inpnum-1]);
-//                 }
+
                 
             }
             
@@ -492,50 +583,43 @@ a{ text-decoration:none}
 	                    s = '00';
 	                    //$("#cont_"+snum).empty();
 	                    $("#cont_"+snum).html("已完成");
-	                    sendMsg(snum,2);
-	                    $.ajax({
-	                        url: savelog_url,
-	                        data: {ctno: snum,time :time
-	                        },
-	                        type: 'POST',
-	                        timeout: 15000,
-	                        success: function (json, textStatus) {
+	                    
+	                    //sendMsg(snum,2);
+// 	                    $.ajax({
+// 	                        url: savelog_url,
+// 	                        data: {ctno: snum,time :time
+// 	                        },
+// 	                        type: 'POST',
+// 	                        timeout: 15000,
+// 	                        success: function (json, textStatus) {
 	                                
-	                        },
-	                        error: function (XMLHttpRequest, textStatus, errorThrown) {
-	                            console.log("jsonp.error:" + XMLHttpRequest.returnCode);
-	                        }
-	                    });
+// 	                        },
+// 	                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+// 	                            console.log("jsonp.error:" + XMLHttpRequest.returnCode);
+// 	                        }
+// 	                    });
 	                    console.log("cnum:" + cnum);
-	                    	if(cnum == 1){
-	                            runflag = false;
-	                            $("#span_msg").empty();
-	                            $("#span_msg").css("css","forestgreen");
-	                            $("#span_msg").append("任务已成功完成");
-	                            sendElcMsg(elc,2);
+	                    if(cnum == 1){
+	                    	runflag = false;
+// 	                            $("#span_msg").empty();
+// 	                            $("#span_msg").css("css","forestgreen");
+// 	                            $("#span_msg").append("任务已成功完成");
+							alert("任务已完成");
+	                        clearCt();
+	                        $("#runjob").removeAttr("disabled").button('refresh');
+	                        //$("#runjob").attr('disabled','').button('refresh');
+	                            //sendElcMsg(elc,2);
 	                        //save log
-	                        }else{
-	                            if(alldata.length > 0){
-	                                var inpnum = alldata.shift();
-	                                resetTime(inpnum,settimedata[inpnum - 1]);
-	                            }
-	                            cnum --;
+	                    }else{
+	                    	if(alldata.length > 0){
+	                        	var inpnum = alldata.shift();
+	                            resetTime(inpnum,settimedata[inpnum - 1]);
 	                        }
-	                        console.log(snum + "结束================================");
-	//                    if(alldata.length > 0){
-	//                        runflag = false;
-	//                            $("#span_msg").empty();
-	//                            $("#span_msg").css("css","forestgreen");
-	//                            $("#span_msg").append("任务已成功完成");
-	//                    }else{
-	//                        var inpnum = alldata.shift();
-	//                            resetTime(inpnum,$("#inp_" + inpnum).val());
-	//                            cnum --;
-	//                    }
+	                        cnum --;
+	                    }
+	                    console.log(snum + "结束================================");
 	                    
 	                }else{
-	                    //console.log(snum + ":" + m + "分钟" + s + "秒");
-	                    //$("#cont_"+snum).empty();
 	                    if(currentsbnum == snum){
 	                    	$("#imptime").val(parseInt(m) * 60 + parseInt(s) );
 	                    }
@@ -543,77 +627,25 @@ a{ text-decoration:none}
 	                }
 	            }
 	            timer = setInterval(countDown, 1000);
-	            //console.log(timer + "===timer===");
 	        }
             
-//             var senddata_url = "../ifs/econtrol/econtrol/sendData";
-//             function sendMsg(sbnum,type){
-//                 var j = 0;
-//                 var tdnum;
-//                 var type1 = "FF00";
-//                 var type2 = "0000";
-//                 var zhuji = ""; //主机号
-//                 var td = "";
-//                 var msg = "";
-//                 var str16 = "";
-//                 for(var i = 0;i < sbtd.length;i ++){
-//                     j += sbtd[i];
-//                     if(sbnum <= j){
-
-//                             tdnum = sbtd[i] - (j - sbnum);
-//                             tdnum = tdnum - 1; //从0位开始
-//                             if(i == 0 ){
-//                                 tdnum += 2;
-//                             }
-
-                        
-//                         if(i < 10 ){
-//                             zhuji = "0" + (i+1) + "05";
-//                         }else{
-//                             str16 = i.toString(16);
-//                             if(str16.length == 1){
-//                                 str16 = "0" + str16;
-//                             }
-//                             zhuji = str16 + "05";
-//                         }
-//                         if(tdnum < 10){
-//                             td = "000" + tdnum;
-//                         }else{
-//                             str16 = tdnum.toString(16);
-//                             if(str16.length == 1){
-//                                 str16 = "0" + str16;
-//                             }
-//                             td = "00" + str16;
-//                         }
-//                         if(type == 1){
-//                             msg = zhuji + td + type1;
-//                         }else{
-//                             msg = zhuji + td + type2;
-//                         }
-//                         $.ajax({
-//                             url: senddata_url,
-//                             data: {data: msg 
-//                             },
-//                             type: 'POST',
-//                             timeout: 15000,
-//                             dataFilter: function (json) {
-//                                 console.log("jsonp.filter:" + json);
-//                                 return json;
-//                             },
-//                             success: function (json, textStatus) {
-//                                 if (json != "") {
-//                                     $("#remsg").append(json);
-//                                 }
-//                             },
-//                             error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                                 console.log("jsonp.error:" + XMLHttpRequest.returnCode);
-//                             }
-//                         });
-//                         //console.log("type:" + type + " sbnum:"+ sbnum +" j:" + j + " tdnum:" + tdnum );
-//                         return ;
-//                     }
-//                 }
-//             }
+            
+            Array.prototype.min = function () {
+            	var min = this[0];
+            	this.forEach(function(ele, index,arr) {
+            		if(min == 0){
+            			if(ele > 0 ){
+            				min = ele;
+            			}
+            		}else{
+            			if(ele > 0 && ele < min) {
+    	            		min = ele;
+    	            	}
+            		}
+	            	
+            	})
+            	return min;
+            }
         </script>
 </head>
 <body>
@@ -654,7 +686,7 @@ a{ text-decoration:none}
 				<button class="ui-btn ui-btn-inline" style="width:45%;float:right;    margin-right:0" id="btn_next" >下一组</button>
 			</div>
 			<div>
-				<input id="runjob" type="button" value="开始执行">
+				<input id="runjob" type="button"  value="开始执行">
 			</div>
 		</div>
 	</div>

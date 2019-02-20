@@ -106,15 +106,16 @@ public class ScheduleUtil {
 			//			job.setJobGroup("group1");
 			//			job.setCronExpression("0 0/5 * * * ?");
 			//			addJob(job);
-			//                        
-			//                        job.setBeanClass("com.os.framework.quartz.jobs.WxTokenJob");
-			//			job.setJobStatus("1");
-			//			job.setJobName("job1");
-			//			job.setJobGroup("group1");
-			//			job.setCronExpression("0 0/15 * * * ?");
+			//
+			//微信token定时更新
+			job.setBeanClass("com.os.framework.quartz.jobs.WxTokenJob");
+			job.setJobStatus("1");
+			job.setJobName("job1");
+			job.setJobGroup("group1");
+			job.setCronExpression("0 0/15 * * * ?");
 
 			MainDao dao = new MainDao();
-			// 水质采集器开关设置
+			// 水质采集器多层水开关设置
 			String sql  = "select distinct s_time from zhyy_shuiceng_shezhi order by s_time ";
 			List<Map<String,Object>> list = dao.queryForList(sql, null);
 			String timestr = "";
@@ -132,7 +133,8 @@ public class ScheduleUtil {
 			job.setJobGroup("group1");
 			job.setCronExpression("0 "+timestr+" * * * ?");
 			addJob(job);
-			// 养水机开关设置
+
+			// 养水机自动开关机控制
 			sql  = "select distinct y_time from zhyy_yangshuiji_shezhi order by y_time ";
 			list = dao.queryForList(sql, null);
 			timestr = "";
@@ -150,6 +152,13 @@ public class ScheduleUtil {
 			job.setJobGroup("group1");
 			job.setCronExpression(timestr + " 0 * * * ?");
 			addJob(job);
+			//获取设备状态 饵料池输水设备
+			job = new ScheduleJob();
+			job.setBeanClass("com.os.framework.quartz.jobs.bundle.zhyy.EContorlJob");
+			job.setJobStatus("1");
+			job.setJobName("job5");
+			job.setJobGroup("group1");
+			job.setCronExpression("0 * * * * ?");
 
 			//                        job = new ScheduleJob();
 			//			job.setBeanClass("com.os.framework.quartz.jobs.bundle.zhyy.DataBuilder");
