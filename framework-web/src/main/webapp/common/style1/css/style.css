@@ -1,0 +1,114 @@
+@charset "utf-8";
+
+/*全局*/
+body{color:#333;background:#fcfaed;}/*整站背景色*/
+a{color:#333333;}
+a:hover{color:#d67f21;}
+
+/*颜色样式*/
+.red{color:#ff0000;}
+.gray{color:#999;}
+input.borline{border:1px solid #c06c00;}/*黄色边线*/
+.Sideline{border:#eddfd3 1px solid;background-color:#fff;}/*框架的边线色*/
+.Grayline{border:#e8e8e8 1px solid;}/*灰色的边线色*/
+.tlrline{border-top:#e8e8e8 1px solid;border-left:#e8e8e8 1px solid;border-right:#e8e8e8 1px solid;}/*灰色的上左右边线色*/
+.yellow,.yellow a,.menu ul li a:hover,.Location li.current a{color:#d67f21;}/*链接黄色*/
+.Gray_bg{background-color:#fafafa;}/*灰色的背景色*/
+
+/*按钮样式*/
+.btn{border-radius:4px 4px 4px 4px;color:#fff;cursor:pointer;display:inline-block;font-weight:bold;padding:3px 10px;text-decoration:none;}
+.btn:hover{border:1px solid #c86f04;opacity:0.9;}
+
+.btn_green{background-color:#6AB620;border:1px solid #749217;color:#fff;text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);}
+.btn_green:hover{box-shadow:0 0 5px rgba(116, 146, 23, 0.9);}
+
+.btn_yellow{background:url(../images/yellowbtn.gif) 0 0 repeat-x;border:1px solid #eb860d;text-shadow:0 1px 1px rgba(0, 0, 0, 0.25);}
+.btn_yellow:hover{box-shadow:0 0 5px rgba(251, 160, 51, 0.9);background-position: 0 -32px;}
+.btn_Lg{padding:2px 18px;}
+.btn1,.btn2{background-image:url(../images/btnbg_1.gif);width:70px;height:21px;text-align:center;display:block;cursor:pointer;}
+.btn2{background-image:url(../images/btnbg_2.gif);color:#fff;}
+.btn_1,.btn_2,.btn_3,.btn_4,.btn_5{padding-left:22px;background-repeat:no-repeat;background-position:0 0;cursor: pointer;}
+.btn_1{background-image:url(../images/icon_1.gif);}
+.btn_2{background-image:url(../images/icon_2.gif);}
+.btn_3{background-image:url(../images/icon_3.gif);}
+.btn_4{background-image:url(../images/icon_4.gif);}
+.btn_5{background-image:url(../images/icon_5.gif);}
+
+/*表格样式*/
+/*例表表格样式*/
+table.Lst_c_t thead th{text-align:center;}
+table.Lst_c_t thead th,td.tab_tit{border:1px solid #e8e8e8;cursor:pointer;font-size:11px;padding-right:4px;text-transform:uppercase;}
+table.Lst_c_t thead th,td.tab_tit{background-image:url(../images/table_thbg.gif);}
+table.Lst_c_t thead th .th_wrapp{padding:6px 4px 5px 7px;}
+tr.odd{background-image:url(../images/odd_bg.gif);}
+tr.even{background-color:#fff;}
+tr.row{background-color:#f8f8f8;}
+table.Lst_c_t td{border:1px solid #e8e8e8;padding:4px 8px;font-size: 12px;}
+table.Lst_c_t td.text_cen{text-align:center;cursor:pointer;}
+.btnList,.page{line-height:20px;height:20px;}
+.btnList span{margin-right:8px;}
+td.tab_tit{font-weight:bold;}
+td.tab_tit_h{height:34px;font-size:16px;}
+/*弹出页表格样式*/
+table.box_tab_1{width:100%; margin-bottom:10px;}
+table.box_tab_1 td{padding:3px 2px;}
+table.box_tab_1 td.tab1_tit{width:130px;text-align:right;}
+
+/*登陆框架*/
+body.Lg_body{background:url(../images/Lg_bot_bg.gif) 0 0 repeat;}/*登陆的背景图*/
+.Lg_hd{background-image:url(../images/Lg_hd_bg.gif);}
+.Lg_hd_c{height:295px;overflow:hidden;background:url(../images/Lg_hd_picbg.gif) center 0 no-repeat;}
+.Lg_bot_c{width:511px;color:#c06c00;margin:32px auto 15px;background:url(../images/Lg_bot_cbg.gif) 0 0 no-repeat; height:219px;}/*登陆框的字体颜色及宽度*/
+.Lg_bot_text{width:430px;margin:0 auto 10px; background:url(../images/icon_10.gif) 0 0 no-repeat;padding-left:21px;}
+.Lg_bot_text p{color:#C06C00;}
+.log_en{font-family:"Tahoma",Helvetica,Arial,sans-serif;padding:0 15px;color:#a8a8a8;}
+
+/*框架*/
+.header{background-image:url(../images/header_bg_1.gif);} /*头部背景图*/
+
+/*顶部框架*/
+.menu{background:url(../images/menubg_1.gif) 0 0 repeat-x;}/*导航背景图*/
+.menu ul li a{font-weight:bold;height:30px;line-height:29px;width:94px;display:block;color:#fff;}/*导航链接字白*/
+.menu ul li a:hover{background-image:url(../images/menu_a.gif);text-decoration:none;cursor:pointer;}/*导航链接背景图*/
+.menu_bot{background:url(../images/menu_b_bg.gif) 0 0 repeat-x;height:12px;}/*导航下淡灰背景图*/
+
+/*中间部分框架*/
+/*左侧部分框架*/
+.mainNav li a{background:url(../images/mainNav_bgline1.gif) 0 bottom no-repeat;padding-bottom:5px;display:block;font-size:14px;}/*导航下线背景图*/
+.mainNav li a span{background:url(../images/icon_11.gif) 0 2px no-repeat; padding-left:20px;}/*导航前图标*/
+.subNav li{background:url(../images/subNav_bgline1.gif) repeat-x 0 bottom;width:193px;}/*子导航下线背景图*/
+.subNav li a{background:url(../images/subNav_icon1.gif) 0 6px no-repeat;padding-left:10px;font-size:12px;}/*子导航前图标*/
+
+/*右侧部分框架*/
+.Location li.parent{background:url(../images/Location_bg.gif) no-repeat right center;padding-left:10px;padding-right:15px;}/*当前位置文字下背景*/
+.box_c_tit{background-color:#f5f5f5;height:28px;padding-left:10px;line-height:28px;}/*搜索文字下灰色背景*/
+.b_tb_tit{background-image:url(../images/list_bg1.gif);padding:0 15px;}/*表格标题与按钮的背景图*/
+
+/*版权框架*/
+.footer{border-top:#eddfd3 1px solid;padding:10px 0;background-color:#fff;}/*版权顶线*/
+
+/*弹出框*/
+.box_Bomb{background-color:#f9f9f9;padding:10px 20px;width:900px;height:575px;overflow:auto;}/*灰色背景色*/
+.box_b_t{clear:both;}
+.box_b_t h2{background:url(../images/Detailed_line.gif) 0 bottom repeat-x;font-weight:bold;color:#d67f21;height:20px;}/*弹出框小标题下线*/
+.box_b_t h2 span{background-position:3px 0;background-repeat:no-repeat;padding-left:25px;}
+.box_b_t h2 span.icon12{background-image: url(../images/icon_12.gif);}/*弹出框小标题前图标*/
+.box_b_t h2 span.icon13{background-image: url(../images/icon_13.gif);}/*弹出框小标题前图标*/
+
+.Multi-tab{background:url(../images/Detailed_line.gif) 0 bottom repeat-x;height:27px;line-height: 27px;}
+.Multi-tab li{float:left;margin:0 5px;text-align:center;width:77px;}
+.Multi-tab .First{background:url(../images/Multi-tab-bg.gif) 0 0 no-repeat;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

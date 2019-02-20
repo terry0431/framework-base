@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+        <style type="text/css">
+            body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+        </style>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Kn5ELl6uqyIca9Uq7vcwYTRL"></script>
+        <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+        <title>地图展示</title>
+        <style>
+            .BMap_cpyCtrl{
+                display:none;
+            }
+            .anchorBL{
+                display:none;
+            }
+            .bottom_xf{ background-color:rgba(0,0,0,.2); width:400px; height:400px; margin:0 auto; overflow:hidden; position: fixed; top:0;z-index:9999; color:#ffffff; }
+        </style>
+    </head>
+    <body>
+
+        <div id="allmap"></div>
+    </body>
+</html>
+<script type="text/javascript">
+    var sb_sbjk_url = "/framework-web/ifs/zhyy/shebeijiankong/nowlist";
+    var retime = 1000 * 10;
+    var baojing = new Object();
+    function jiankong(){
+        $.ajax({
+            url: sb_sbjk_url,
+            type: 'POST',
+            async: false,
+            data: {},
+            success: function (data) {
+                var js = 0;
+                var nowtime = new Date();
+                for(i = data.length - 1;i >= 0;i --){
+                        if(data[i] != null && data[i].length > 0){
+                            for (j = 0; j < data[i].length; j++) {
+                                if (data[i][j].s_flag == "1" || data[i][j].s_flag == "2") {
+                                    if(baojing[i + "_" + j] == null){
+                                        $("#div_msg").append("<li id=\"li_1\"><button onclick=\"showInfo()\">查看</button>"+i+"点：固德水产有限公司的"+(j+1)+"号水泵出现问题</li>" );
+                                        playSound();
+                                        marker.setAnimation(BMAP_ANIMATION_BOUNCE);
+                                        baojing[i + "_" + j] = 1;
+                                    }
+                                }
+                            }
+                        }
+                }
+                setTimeout("jiankong()", retime);
+            },
+            error: function (data) {
+                alert("error: " + JSON.stringify(data));
+            }
+        });
+    }
+    
+    function showInfo(){
+	//alert(num);
+        $("#li_1").remove();
+	map.centerAndZoom(marker.getPosition(),11);
+        marker.setAnimation();
+	marker.openInfoWindow(infoWindow);
+	$("#li_1").remove();
+    }
+    // 百度地图API功能
+    var map = new BMap.Map("allmap", {mapType: BMAP_HYBRID_MAP});    // 创建Map实例
+    map.centerAndZoom("庄河市", 11);  // 初始化地图,设置中心点坐标和地图级别
+    //添加地图类型控件
+    //map.setCurrentCity("");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    var marker;
+    var infoWindow;
+    function gude_demo() {
+        var rectangle = new BMap.Polygon([
+            new BMap.Point(123.347955, 39.776378),
+            new BMap.Point(123.373706, 39.778578),
+            new BMap.Point(123.373706, 39.760213),
+            new BMap.Point(123.349355, 39.755913)
+        ], {strokeColor: "blue", strokeWeight: 2, strokeOpacity: 0.5});
+        //rectangle.setLabel(label);
+        map.addOverlay(rectangle);
+        marker = new BMap.Marker(new BMap.Point(123.373706, 39.778578));
+        var sContent =
+                "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>固德水产有限公司</h4>" +
+                "<img style='float:right;margin:4px' id='imgDemo' src='/framework-web/gis/images/gude.jpg' width='139' height='104' title='固德水产有限公司'/>" +
+                "<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'>大连庄河市青堆子湾沿海</p>" +
+                "<a href=\"#\">视频监控</a><br/>" +
+                "<a target=\"_blank\" href=\"/framework-web/con/zhyy/shebeijiankong/nowlist\">设备实时</a><br/>" +
+                "<a target=\"_blank\" href=\"/framework-web/con/zhyy/shuizhi/now\">池塘实时</a><br/>" +
+                "<a target=\"_blank\" href=\"/framework-web/con/zhyy/qixiangshuju/now\">气象实时</a><br/>" +
+                "<a target=\"_blank\" href=\"/framework-web/con/zhyy/xuntang/viewlist\">寻塘日记</a><br/>";
+        var label = new BMap.Label("固德水产有限公司", {offset: new BMap.Size(20, -20)});
+        marker.setLabel(label);
+        //function add_overlay(){
+        infoWindow = new BMap.InfoWindow(sContent);
+        marker.addEventListener("click", function () {
+            this.setAnimation();
+            this.openInfoWindow(infoWindow);
+        });
+        map.addOverlay(marker);
+		
+        var marker_ycz = new BMap.Marker(new BMap.Point(121.350,38.998));
+	
+        var sContent = "<h4 style='margin:0 0 5px 0;padding:0.2em 0'>营城子</h4>" +
+                "<img style='float:right;margin:4px' id='imgDemo' src='' width='139' height='104' title='大连岑氏海珍品有限公司'/>" +
+                "<p style='margin:0;line-height:1.5;font-size:13px;text-indent:2em'></p>" +
+                "<a target=\"_blank\" href=\"/framework-web/demo/cn/ycz.html\">视频监控</a><br/>" +
+                "<a target=\"_blank\" href=\"/framework-web/con/zhyy/shebeijiankong/nowlist?id=2\">设备实时</a><br/>" +
+                "<a href=\"#\">池塘实时</a><br/>" +
+                "<a href=\"#\">气象实时</a><br/>" +
+                "<a href=\"#\">寻塘日记</a><br/>";
+				
+		var label = new BMap.Label("大连岑氏海珍品有限公司",{offset:new BMap.Size(20,-20)});
+			
+		marker_ycz.setLabel(label);
+		//function add_overlay(){
+		var infoWindow_ycz = new BMap.InfoWindow(sContent);
+		marker_ycz.addEventListener("click",function(){
+				
+			this.setAnimation();
+			this.openInfoWindow(infoWindow_ycz);
+		});
+		map.addOverlay(marker_ycz);
+        
+        var openIcon = new BMap.Icon("../../gis/images/oicn_6.gif", new BMap.Size(30, 30));
+        var closeIcon = new BMap.Icon("../../gis/images/oicn_6a.gif", new BMap.Size(30, 30));
+    }
+
+    function playSound()
+    {
+        var borswer = window.navigator.userAgent.toLowerCase();
+        if (borswer.indexOf("ie") >= 0)
+        {
+            //IE内核浏览器
+            var strEmbed = '<embed name="embedPlay" src="http://www.gongqinglin.com/accessory/ding.wav" autostart="true" hidden="true" loop="false"></embed>';
+            if ($("body").find("embed").length <= 0)
+                $("body").append(strEmbed);
+            var embed = document.embedPlay;
+
+            //浏览器不支持 audion，则使用 embed 播放
+            embed.volume = 100;
+            //embed.play();这个不需要
+        } else
+        {
+            //非IE内核浏览器
+            var strAudio = "<audio id='audioPlay' src='http://fjdx.sc.chinaz.com/files/download/sound1/201406/4611.wav' hidden='true'>";
+            if ($("body").find("audio").length <= 0)
+                $("body").append(strAudio);
+            var audio = document.getElementById("audioPlay");
+
+            //浏览器支持 audion
+            audio.play();
+        }
+    }
+    gude_demo();
+//    jiankong();
+    //playSound();
+    //}
+</script>

@@ -1,0 +1,53 @@
+@charset "utf-8";
+
+/*框架*/
+.header,.menu,.menu_bot,.main,.footer,.Lg_hd,.Lg_bot,.mainRight,.titlst,table.Lst_c_t,.b_tb_c,.box_b_t{width:100%;}
+
+/*登陆框架*/
+.Lg_logo{display:block;height:52px;margin:215px auto 0;width:348px;}
+.Lg_bot{min-height:340px;}
+.Lg_bot_c ul{padding:32px 75px 0;}
+.Lg_bot_c ul li{padding:9px 0; height:20px;line-height:20px;}
+.logtit{width:120px;text-align:left;float:left;}
+.Lg_bot_c ul li span.ml120{margin-left:120px;}
+.Lg_bot_c ul li span.ml45{margin-left:45px;}
+
+/*顶部框架*/
+.logo{height:81px;overflow:hidden;}
+.funcBar{margin:7px 3px;display:inline;}
+.funcBar ul{clear:both;}
+.funcBar ul li{margin:2px 5px;display:inline;}
+.menu ul{padding:5px;height:29px;line-height:29px;}
+.menu ul li{text-align:center;margin:0 1px;display:inline;}
+.menu ul li img{margin-top:3px;display:block;}
+
+/*中间部分框架*/
+/*左侧部分框架*/
+.main{position:relative;}
+.mainLeft{width:200px;margin-right:10px;padding:10px;}
+.mainNav li{margin-bottom:8px;text-align:left;width:200px;}
+.subNav{_margin-top:7px;}
+
+/*右侧部分框架*/
+.mainR{position:relative;}
+.titlst{display:inline-table;}
+.mainRArea{margin-left:232px;position:relative;}
+/*
+.Area{padding:10px;min-width:750px;_width:expression(document.body.clientWidth < 750? "750px": document.body.clientWidth );}
+*/
+.mainRight{_width:99.5%}
+.Location{height:26px;}
+.Location li{height:16px;padding:5px;}
+.Location li img{padding-bottom:5px;padding-right:5px;_padding-bottom:0px;}
+.box_c{margin-bottom:10px;}
+.search{display:table;margin:10px 10px 0;_width:90%;}
+.search li{margin:0 5px 5px;display:inline;height:21px;line-height:21px;}
+.box_tab{margin:10px 0;}
+.box_tab ul{padding:0 3px;}
+.box_tab ul li{margin:0 10px;display:inline;}
+.b_tb_btn{height:28px;line-height:28px;}
+.b_tb_c{display:table;}
+
+/*版权框架*/
+.footer a{padding:0 8px;}
+
