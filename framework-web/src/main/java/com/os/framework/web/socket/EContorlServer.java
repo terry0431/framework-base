@@ -6,6 +6,7 @@ package com.os.framework.web.socket;
  * and open the template in the editor.
  */
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.os.framework.core.util.BinaryConversionUtil;
 import com.os.framework.core.util.StringUtil;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
@@ -122,7 +123,8 @@ public class EContorlServer {
                                             //0201020000fdfc
                                             //0201023f00ec0c
                                             zj = Integer.parseInt( tmp.substring(0,2) ) - 1;
-                                            str2 = StringUtil.hexString2binaryString(tmp.substring(6,tmp.length() - 4));
+                                            str2 = BinaryConversionUtil.hexStringToBinaryString(tmp.substring(6,tmp.length() - 4));
+                                            //str2 =  StringUtil.hexString2binaryString(tmp.substring(6,tmp.length() - 4));
                                             ecinf.updateSbflag(zj, str2);
 //                                            str16 = intToHex(Integer.parseInt(tmp.substring(6,10)) );
                                             
