@@ -12,6 +12,8 @@ import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
 import com.os.framework.web.bean.bundle.zhyy.pool.Job;
 import com.os.framework.web.bean.bundle.zhyy.pool.JobBean;
+import com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface;
+import com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter;
 import com.os.framework.web.socket.EContorlServer;
 import com.os.framework.web.socket.NIOServer;
 import com.os.framework.web.util.crc.CRCUtil;
@@ -44,7 +46,7 @@ public class PoolContorlIntfc {
         sb.add(8-2); //主机1  前2个口为饵料池用开关 后6
         sb.add(12);
     }
-    
+
     @RequestMapping(value = {"/ifs/econtrol/econtrol/getData"}, method = {POST})
     @ResponseBody
     public String getData(HttpServletRequest request) {
@@ -52,39 +54,46 @@ public class PoolContorlIntfc {
 //        NIOServer.data = "";
         return data;
     }
-//    private static int e1 = 6;
-//    private static int e2 = 6;
-    @RequestMapping(value = {"/ifs/econtrol/econtrol/getElc"}, method = {POST})
-    @ResponseBody
-    public List getElc(String flag,HttpServletRequest request) { //获取饵料池水深
-        List<Integer> list = new ArrayList();
-        if(flag != null && flag.equals("1")){
-            list.add(6);
-            list.add(6);
-        }else{
-            
-        }
-        return list;
-    }
-    
+
+
+//    @RequestMapping(value = {"/ifs/econtrol/econtrol/getElc"}, method = {POST})
+//    @ResponseBody
+//    public List getElc(String flag,HttpServletRequest request) { //获取饵料池水深
+//        List<Integer> list = new ArrayList();
+//        if(flag != null && flag.equals("1")){
+//            list.add(6);
+//            list.add(6);
+//        }else{
+//
+//        }
+//        return list;
+//    }
+    /**
+     * @Description: 获取开关状态
+     * @param request
+     * @return:java.util.Map<java.lang.Integer,java.lang.Integer[]>
+     * @Author:wangbo
+     * @Date:2019-02-21
+     * @Time:10:29
+     **/
     @RequestMapping(value = {"/ifs/econtrol/econtrol/getKgFlag"}, method = {POST})
     @ResponseBody
-    public Map<Integer,Integer[]> getKgFlag(HttpServletRequest request) { //获取饵料池水深
+    public Map<Integer,Integer[]> getKgFlag(HttpServletRequest request) {
     	//测试数据
-    	if(sbztmap.get(1) == null) {
+    	if(sbztmap.get(0) == null) {
     		Integer fnum[] = new Integer[] {0,1,0,1,0,1};
-    		sbztmap.put(1, fnum);
+    		sbztmap.put(0, fnum);
     	}
         return sbztmap;
     }
 
     /**
-      * @Description:执行输水任务
-      * @Param:* @param josnStr Job json
-      * @return:java.lang.String 成功返回1  出错返回-1
+      * @Description:执行任务
+      * @param josnStr Job json
+      * @return:
       * @Author:wangbo
-      * @Date:2019-02-20
-      * @Time:16:32
+      * @Date:2019-02-21
+      * @Time:10:27
     **/
     @RequestMapping(value = {"/ifs/econtrol/econtrol/runJob"}, method = {POST})
     @ResponseBody
@@ -124,8 +133,19 @@ public class PoolContorlIntfc {
 	    	}
     	}
     }
+
+   
     @RequestMapping(value = {"/ifs/econtrol/econtrol/getJob"}, method = {POST})
     @ResponseBody
+    /**
+      * @Description:获取任务
+      * @param rtuid
+      * @param request
+      * @return:com.os.framework.web.bean.bundle.zhyy.pool.Job
+      * @Author:wangbo
+      * @Date:2019-02-21
+      * @Time:10:26
+    **/
     public Job getJob(String rtuid, HttpServletRequest request) {
         Job job = JobBean.getJob(rtuid);
         if(job != null) {
@@ -135,23 +155,17 @@ public class PoolContorlIntfc {
     }
     @RequestMapping(value = {"/ifs/econtrol/econtrol/sendData"}, method = {POST})
     @ResponseBody
-    public String sendData(String data, HttpServletRequest request) {
-        
-        data = data.trim();
-        data = data.replaceAll(" ", "");
-        byte[] bytes = CRCUtil.hexToByteArray(data);
-        data += CRCUtil.getCRC3(bytes);
-        final String msg = data;
+    public String sendData(String rtuid,int lineNum,int equipmentNum ,int type , HttpServletRequest request) {
 
+        EContorlAdapterInterface eContorlAdapterInterface = new EContorlPoolModelJMRtuAdapter();
         try {
-
-            NIOServer nserver = new NIOServer();
-            nserver.doWrite("hongyuan", msg);
+            eContorlAdapterInterface.switchControl(rtuid, equipmentNum,lineNum,type,0);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            return "-1";
         }
-        return "<br/>send: " + data + " successed";
+        return "1";
     }
     
     @RequestMapping(value = {"/ifs/econtrol/econtrol/saveLog"}, method = {POST})
@@ -164,7 +178,16 @@ public class PoolContorlIntfc {
         map.put("c_shijian", time);
         dao.save("con_log", map, PKBean.NATIVE);
     }
-    
+
+    /**
+      * @Description: 处理并更新状态码
+      * @param zj   主机号
+      * @param flag 状态码
+      * @return:
+      * @Author:wangbo
+      * @Date:2019-02-21
+      * @Time:14:21
+    **/
     public void updateSbflag(Integer zj,String flag){
         Integer[] fnum;
         if(flag.length() == 16){
@@ -174,6 +197,30 @@ public class PoolContorlIntfc {
         for(int i = 0;i < flag.length();i ++){
             fnum[i] = Integer.parseInt(flag.substring(i,i+1));
         }
-        sbztmap.put(zj, fnum);
+        sbztmap.put(zj, fnum);//更新设备状态
+    }
+
+
+    private static long lastruntime = 0;
+    /**
+      * @Description:加载开关状态 当有客户连接时多客户端同时每秒提交一次请求 该方法每1秒读取一次状态
+      * @param rtuid
+      * @return:
+      * @Author:wangbo
+      * @Date:2019-02-21
+     * @Time:10:37
+    **/
+    @RequestMapping(value = {"/ifs/econtrol/econtrol/loadState"}, method = {POST})
+    @ResponseBody
+    public void loadState(String rtuid){
+        long intervalTime = 2000;
+        EContorlAdapterInterface eContorlAdapterInterface = new EContorlPoolModelJMRtuAdapter();
+        // 上次执行时间距今大于 间隔时间
+        if(lastruntime == 0 || System.currentTimeMillis() - lastruntime > intervalTime){
+            lastruntime = System.currentTimeMillis();
+            eContorlAdapterInterface.getState(rtuid);
+        }else{
+            return;
+        }
     }
 }

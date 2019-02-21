@@ -173,14 +173,14 @@ public class JobBean {
 	/**
 	 * 设置任务
 	 * @param job	任务对象
-	 * @param yzcid	养殖场id
+	 * @param rtuid	养殖场id
 	 */
 	public static void setJob(Job job,String rtuid) {
 		runmap.put(rtuid,job);
 	}
 	/**
 	 * 获取任务
-	 * @param yzcid
+	 * @param rtuid
 	 * @return
 	 */
 	public static Job getJob(String rtuid) {

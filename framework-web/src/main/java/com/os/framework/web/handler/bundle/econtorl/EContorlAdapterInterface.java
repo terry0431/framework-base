@@ -11,7 +11,7 @@ public interface EContorlAdapterInterface {
 	
 	/**
 	 * 向设备发送信息
-	 * @param code 设备编号
+	 * @param rtuid 设备编号
 	 * @param msg 发送内容
 	 * @return
 	 */

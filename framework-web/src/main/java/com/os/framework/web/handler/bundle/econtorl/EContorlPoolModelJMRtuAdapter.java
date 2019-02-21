@@ -121,8 +121,8 @@ public class EContorlPoolModelJMRtuAdapter implements EContorlAdapterInterface {
 
 			msg = sb + flag + td ;
 
-			byte[] bytes = CRCUtil.hexToByteArray(msg);
-			msg += CRCUtil.getCRC3(bytes);
+//			byte[] bytes = CRCUtil.hexToByteArray(msg);
+//			msg += CRCUtil.getCRC3(bytes);
 			try{
 				Map<String,String> m = new HashMap();
 				m.put(rtuid, msg);

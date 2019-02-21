@@ -3,10 +3,10 @@ package com.os.framework.web.bean.bundle.zhyy.pool;
 public class Job {
 	private boolean run_state = false; //当前任务执行状态 
 	private Integer[] jobinfo;	//任务信息
-	private Integer[] lineNum;	//执行任务的通道
+	private Integer[] lineNum;	//设备通道号
 	private Integer elcnum;//饵料池号
 	private Integer concurrentNum; //并发数
-	private Integer[] equipmentNum;
+	private Integer[] equipmentNum;//设备号
 	
 	private long runtime;
 	private long currenttime;

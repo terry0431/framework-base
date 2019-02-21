@@ -44,14 +44,16 @@ a{ text-decoration:none}
 	        
 	        var getkgflag_url = "../ifs/econtrol/econtrol/getKgFlag"; //获取开关状态
 	        var checkJob_url = "../ifs/econtrol/econtrol/getJob"//;
-	        var savelog_url = "../ifs/econtrol/econtrol/saveLog";
+	        //var savelog_url = "../ifs/econtrol/econtrol/saveLog";
 	        var runjob_url = "../ifs/econtrol/econtrol/runJob";
-	        
+			var loadstate_url = "../ifs/econtrol/econtrol/loadState";
+			var send_url = "../ifs/econtrol/econtrol/sendData";
 	        
 	        var alldata ;
             var runflag = false;
             var elc = "";
-            
+
+			var rtuid = "hongyuan";
             $(function () {
             	//$("#runjob").prop('disabled','').addClass("ui-disabled").button('refresh');
             	//$("#runjob").attr('disabled','disabled').button('refresh');
@@ -80,18 +82,39 @@ a{ text-decoration:none}
                 $('#runjob').bind('click', function(){
                 	runjob();
                 });
+				loadstate();
                 initList();
                 loadkgflag();
                 checkJob();
-                timer = setInterval(loadkgflag, 3000);
-                //timer = setInterval(checkJob, 3000);
+                timer = setInterval(loadkgflag, 2000);//获取开关状态
+				timer = setInterval(loadstate, 2000);//加载开关状态
+                //timer = setInterval(loadstate, 3000);
                 //$("#p_msg").show();
             })
-            
+
+			function loadstate(){
+				$.ajax({
+					url: loadstate_url,
+					data: {rtuid:rtuid
+					},
+					type: 'POST',
+					timeout: 15000,
+					dataFilter: function (json) {
+						//console.log("job state :" + json.run_state);
+						return json;
+					},
+					success: function (json, textStatus) {
+						console.log("jsonp:" + json);
+					},
+					error: function (XMLHttpRequest, textStatus, errorThrown) {
+						console.log("jsonp.error:" + XMLHttpRequest.returnCode);
+					}
+				});
+			}
             function checkJob(){
             	$.ajax({
 	                url: checkJob_url,
-	                data: {rtuid:"hongyuan"
+	                data: {rtuid:rtuid
 	                },
 	                type: 'POST',
 	                timeout: 15000,
@@ -316,7 +339,7 @@ a{ text-decoration:none}
                 } 
 //                 var numstr = "";
                 for(var i = (groupnum * pagelistsize) + 1;i <= datasize ;i ++){//power-black forbidden-black
-                    ctstr += "<a class=\"ui-btn ui-btn-inline \" style=\"color:#363636;width:60px;height:30px; background:#CCCCCC1;font-size:10px; \" onclick=\"setImpValue("+i+")\" id=\"a_"+i+"\" href=\"#setTime\">"+i+"号池<br/>";
+                    ctstr += "<a class=\"ui-btn ui-btn-inline \" style=\"color:#363636;width:60px;height:30px; background:#CCCCCC;font-size:10px; \" onclick=\"setImpValue("+i+")\" id=\"a_"+i+"\" href=\"#setTime\">"+i+"号池<br/>";
 					if(settimedata[i-1] != null & settimedata[i-1] != ""){
 						ctstr += "<span id=\"cont_"+i+"\">" + settimedata[i-1] + "秒</span>";
 					}else{
@@ -628,8 +651,47 @@ a{ text-decoration:none}
 	            }
 	            timer = setInterval(countDown, 1000);
 	        }
-            
-            
+
+			function sendMsg(sbnum,type){
+				var j = 0;
+				var tdnum;
+				var zhuji = ""; //主机号
+				var td = "";
+				for(var i = 0;i < sbtd.length;i ++){
+					j += sbtd[i];
+					if(sbnum <= j){
+						tdnum = sbtd[i] - (j - sbnum);
+						tdnum = tdnum - 1; //从0位开始
+						if(i == 0 ){
+							tdnum += 2;
+						}
+						$.ajax({
+							url: send_url,
+							data: {rtuid: rtuid,lineNum:tdnum,equipmentNum:i,type:type
+							},
+							type: 'POST',
+							timeout: 15000,
+							dataFilter: function (json) {
+								console.log("jsonp.filter:" + json);
+								return json;
+							},
+							success: function (json, textStatus) {
+								if (json == "1") {
+									//$("#remsg").append(json);
+									if(sbnum < 1){
+										$("#elc_" + (sbnum + 2) ).html("正在执行...");
+									}
+								}
+							},
+							error: function (XMLHttpRequest, textStatus, errorThrown) {
+								console.log("jsonp.error:" + XMLHttpRequest.returnCode);
+							}
+						});
+						return ;
+					}
+				}
+			}
+
             Array.prototype.min = function () {
             	var min = this[0];
             	this.forEach(function(ele, index,arr) {
@@ -674,9 +736,11 @@ a{ text-decoration:none}
 				
 		         <fieldset data-role="controlgroup">
                         <input type="radio" name="elc" id="r_elc_1" value="1" checked="checked">
-                        <label for="r_elc_1">1号饵料池<span id="elc_1"><img  src="../images/oicn_6a.gif" />&nbsp;&nbsp;<a tabindex="-1" href="javascript:sendMsg(-1,1)">打开</a></span></label>
+                        <label for="r_elc_1">1号饵料池</label>
+						<span id="elc_1"></span>
                         <input type="radio" name="elc" id="r_elc_2" value="2" />
-                        <label for="r_elc_2">2号饵料池<span id="elc_2"></span></label>
+                        <label for="r_elc_2">2号饵料池</label>
+					 	<span id="elc_2"></span>
                 </fieldset>
 				<div id="ctlist">
 				</div>

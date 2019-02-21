@@ -152,7 +152,7 @@ public class ScheduleUtil {
 			job.setJobGroup("group1");
 			job.setCronExpression(timestr + " 0 * * * ?");
 			addJob(job);
-			//获取设备状态 饵料池输水设备
+			//获取设备状态 饵料池输水设备 
 			job = new ScheduleJob();
 			job.setBeanClass("com.os.framework.quartz.jobs.bundle.zhyy.EContorlJob");
 			job.setJobStatus("1");
