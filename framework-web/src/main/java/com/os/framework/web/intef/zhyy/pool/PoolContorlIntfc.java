@@ -79,19 +79,6 @@ public class PoolContorlIntfc {
     }
 
     /**
-     * @return
-     */
-    @RequestMapping(value = {"/ifs/econtrol/econtrol/runJob"}, method = {POST})
-    @ResponseBody
-    public String runJob() {
-        return runJob();
-    }
-
-
-
-
-
-    /**
       * @Description:执行输水任务
       * @Param:* @param josnStr Job json
       * @return:java.lang.String 成功返回1  出错返回-1
