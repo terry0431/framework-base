@@ -113,8 +113,8 @@ public class EContorlServer {
                                         byteBuffer.flip(); //为write()准备
                                         byte[] bytes = new byte[byteBuffer.remaining()];
                                         byteBuffer.get(bytes);
-                                        //tmp = StringUtil.bytesToHexFun2(bytes);
-                                        tmp += new String(bytes);
+                                        tmp = BinaryConversionUtil.bytesToHex(bytes);
+                                        //tmp += new String(bytes);
                                         //读取开关命令
                                         if(tmp.substring(2,4).equals("01")){
                                             //0102020000b9b8

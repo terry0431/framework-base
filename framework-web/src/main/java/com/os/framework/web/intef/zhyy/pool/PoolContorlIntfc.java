@@ -75,10 +75,10 @@ public class PoolContorlIntfc {
     @ResponseBody
     public Map<Integer, Integer[]> getKgFlag(HttpServletRequest request) {
         //测试数据
-        if (sbztmap.get(0) == null) {
-            Integer fnum[] = new Integer[]{0, 1, 0, 1, 0, 1};
-            sbztmap.put(0, fnum);
-        }
+//        if (sbztmap.get(0) == null) {
+//            Integer fnum[] = new Integer[]{0, 1, 0, 1, 0, 1};
+//            sbztmap.put(0, fnum);
+//        }
         return sbztmap;
     }
 
