@@ -7,10 +7,8 @@ package com.os.framework.web.socket;
  */
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.os.framework.core.util.BinaryConversionUtil;
-import com.os.framework.core.util.StringUtil;
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.db.util.PKBean;
-import com.os.framework.web.intef.zhyy.pool.PoolContorlIntfc;
+import com.os.framework.web.intef.zhyy.WaterConveyanceIntfc;
 import com.os.framework.web.util.crc.CRCUtil;
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -21,8 +19,6 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -64,7 +60,7 @@ public class EContorlServer {
         Map map = null;
         String sessionstr = "";
         MainDao dao = new MainDao();
-        PoolContorlIntfc ecinf = new PoolContorlIntfc();
+        WaterConveyanceIntfc ecinf = new WaterConveyanceIntfc();
         try {
             ssc = ServerSocketChannel.open();
             ssc.configureBlocking(false);

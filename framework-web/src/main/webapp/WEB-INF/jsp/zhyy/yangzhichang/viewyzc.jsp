@@ -978,7 +978,7 @@
                     success: function (json, textStatus) {
                         //alert("getWsData");
                         rtu = json;
-                        if (!init_flag) {
+                        if (!init_flag && json != null && json.rtuai != null && json.rtuai.length >= 8) {
                             load_yandu(json.rtuai[5].va);
                             load_shuiwen(json.rtuai[6].va);
                             load_chaoxi(json.rtuai[7].va);

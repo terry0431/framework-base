@@ -5,9 +5,8 @@
  */
 package com.os.framework.quartz.jobs.bundle.zhyy;
 
-import com.os.framework.core.util.DateUtil;
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.web.cache.bundle.zhyy.SystemCache;
+import com.os.framework.web.cache.zhyy.SystemCache;
 import com.os.framework.web.service.bundle.zhyy.DataBuilder;
 import com.os.framework.web.socket.NIOServer;
 import java.util.ArrayList;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
 
 /**
  *

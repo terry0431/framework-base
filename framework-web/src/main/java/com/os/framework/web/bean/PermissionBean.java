@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.web.sys.mod.User;
+import com.os.framework.web.mod.system.User;
 
 
 

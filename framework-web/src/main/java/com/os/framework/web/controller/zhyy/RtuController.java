@@ -1,0 +1,91 @@
+package com.os.framework.web.controller.zhyy;
+
+import java.util.Map;
+import java.util.List;
+import javax.servlet.http.HttpServletRequest;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import com.os.framework.db.dao.MainDao;
+
+import static org.springframework.web.bind.annotation.RequestMethod.GET;
+/**
+ * **信息控制类
+ * 
+ * @author
+ * @version 1.0
+ */
+@Controller
+public class RtuController {
+	/**
+	 * 跳转**查询列表
+	 * 
+	 * @param (request)
+	 * @return
+	 * @author
+	 * @version 1.0
+	 */
+	@RequestMapping(value = "/con/zhyy/rtu/list", method = GET)
+	public String list(HttpServletRequest request) {
+			
+		MainDao mainDao = new MainDao();
+		List<Map<String,Object>> zhyy_yangzhichangList = mainDao.queryForList("select * from zhyy_yangzhichang",null);
+                
+		request.setAttribute("zhyy_yangzhichangList",zhyy_yangzhichangList);
+		return "zhyy/rtu/list";
+	}
+
+
+	/**
+	 * 跳转到**添加页面
+	 * 
+	 * @param( model)
+	 * @param( request)
+	 * @return
+	 * @author
+	 * @version 1.0
+	 */
+	@RequestMapping(value = "/con/zhyy/rtu/add", method = GET)
+	public String add(HttpServletRequest request) {
+				MainDao mainDao = new MainDao();
+				List zhyy_yangzhichangList = mainDao.queryForList("select * from zhyy_yangzhichang",null);
+		request.setAttribute("zhyy_yangzhichangList",zhyy_yangzhichangList);
+						return "zhyy/rtu/form";
+	}
+
+
+	/**
+	 * 跳转**编辑页面
+	 * 
+	 * @param( id)
+	 * @param( model)
+	 * @param( request)
+	 * @return
+	 * @author
+	 * @version 1.0
+	 */
+	@RequestMapping(value = "/con/zhyy/rtu/edit", method = GET)
+	public String edit(String id, HttpServletRequest request) {
+		MainDao mainDao = new MainDao();
+		List zhyy_yangzhichangList = mainDao.queryForList("select * from zhyy_yangzhichang",null);
+		request.setAttribute("zhyy_yangzhichangList",zhyy_yangzhichangList);
+		request.setAttribute("id",id);
+		return "zhyy/rtu/form";
+	}
+
+    /**
+     * 跳转**查看页面
+     *
+     * @param( id)
+     * @param( model)
+     * @param( request)
+     * @return
+     * @author
+     * @version 1.0
+     */
+    @RequestMapping(value = "/con/zhyy/rtu/view", method = GET)
+    public String view(String id, HttpServletRequest request) {
+        request.setAttribute("id", id);
+        return "zhyy/qixiang/view";
+    }
+
+}
