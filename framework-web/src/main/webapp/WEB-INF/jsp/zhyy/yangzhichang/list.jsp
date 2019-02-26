@@ -88,8 +88,7 @@
             {name:"更新缓存", className:"btn_2", event:"click", eventFunc:exportFun},
 //            {name:"导入", className:"btn_3", event:"click", eventFunc:importFun},
 //            {name:"打印", className:"btn_4", event:"click", eventFunc:printFun},
-            {name:"刷新", className:"btn_5", event:"click", eventFunc:searchlist},
-            {name:"删除", className:"btn_9", event:"click", eventFunc:deleteAll}
+            {name:"刷新", className:"btn_5", event:"click", eventFunc:searchlist}
         ],
         colModel:[
             {name:'checkbox', value:iconImg.checkBoxIcon, width:"10%",align:"center" ,event:"click", eventFunc:selclick},
@@ -101,11 +100,10 @@
             {name:'YLianxidianhua', value:'联系人电话', width:"10%",align:"center"},	
             {name:'zuobiaoX', value:'经度', width:"10%",align:"center"},	
             {name:'zuobiaoY', value:'纬度', width:"10%",align:"center"},	
-            {name:'YDizhi', value:'地址', width:"10%",align:"center"},	
+            {name:'YDizhi', value:'地址', width:"10%",align:"center"}
 //            {name:'YSheng', value:'省份', width:"10%",align:"center"},	
 //            {name:'YShi', value:'城市', width:"10%",align:"center"},	
-//            {name:'YQuxian', value:'区县', width:"10%",align:"center"},	
-            {name:"delete", value:'删除', width:"10%", align:"center"}
+//            {name:'YQuxian', value:'区县', width:"10%",align:"center"},
         ]
     }
     function initARG(){
@@ -140,8 +138,8 @@
 //                    YShi:{value:list[i].y_shi, align:"center"},
 //                    YQuxian:{value:list[i].y_quxian, align:"center"},
                     edit:{value:iconImg.editIcon, event:"click", eventFunc:editZhyyYangzhichang, customArg:{}, align:"center"},
-                    view:{value:iconImg.infoIcon, event:"click", eventFunc:viewZhyyYangzhichang, customArg:{}, align:"center"},
-                    "delete":{value:iconImg.deleteIcon,event:"click", eventFunc:deleteZhyyYangzhichang, customArg:{}, align:"center"}
+                    view:{value:iconImg.infoIcon, event:"click", eventFunc:viewZhyyYangzhichang, customArg:{}, align:"center"}
+
                 }
             });
         }

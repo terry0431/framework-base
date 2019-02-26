@@ -1,19 +1,10 @@
 package com.os.framework.quartz.jobs.bundle.zhyy;
 
-import com.os.framework.core.util.BinaryConversionUtil;
-import com.os.framework.quartz.jobs.*;
-import com.os.framework.web.handler.bundle.econtorl.EContorlAdapterInterface;
-import com.os.framework.web.handler.bundle.econtorl.EContorlPoolModelJMRtuAdapter;
-import com.os.framework.web.socket.NIOServer;
-import com.os.framework.web.util.crc.CRCUtil;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.os.framework.web.handler.econtorl.EContorlAdapterInterface;
+import com.os.framework.web.handler.econtorl.EContorlPoolModelJMRtuAdapter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.JobKey;
 
 /**
  * @author wangbo
