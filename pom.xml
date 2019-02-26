@@ -253,8 +253,8 @@
         <module>framework-db</module>
         <module>framework-core</module>
         <module>framework-web</module>
-        <module>web-transceiver</module>
         <module>framework-transceriver</module>
+        <module>framework-imitator</module>
     </modules>
 
 </project>
