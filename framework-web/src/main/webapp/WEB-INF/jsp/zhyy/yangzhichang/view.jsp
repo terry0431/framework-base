@@ -225,28 +225,34 @@
                         htmlstr += "<tr height=\"35px\"  bgcolor=\"#00FFFF\" align=\"center\" >";
                         //alert(key);
                         htmlstr += "<td onclick=showYzqxiangxi(\""+key.substring(0,key.indexOf("_")  )+"\")>"+key.substring(key.indexOf("_") + 1 , key.length)+"</td>";
-                        for(var i =0;i  < attrs.length;i ++){
-                            titlestr = "";
-                            funstr = "";
-                            if(json[key][attrs[i]] !== undefined){
-                                if(json[key][attrs[i]].s_leibie == "ai"){
-                                    titlestr = json[key][attrs[i]].val;
-                                    if(json[key][attrs[i]].s_attr == "s_shuishen" || json[key][attrs[i]].s_attr == "s_dianliu_1" || json[key][attrs[i]].s_attr == "s_dianliu_2"){
-                                        funstr = "onclick=showdanceng(\""+json[key][attrs[i]].zhyy_rtu_id+"\",\""+json[key][attrs[i]].zhyy_yangzhiqu_id+"\",\""+json[key][attrs[i]].s_attr+"\")";
-                                    }else{
-                                        funstr = "onclick=showduoceng(\""+json[key][attrs[i]].zhyy_rtu_id+"\",\""+json[key][attrs[i]].zhyy_yangzhiqu_id+"\",\""+json[key][attrs[i]].s_attr+"\")";
+                        for(var i =0;i  < attrs.length;i ++) {
+                            //临时代码
+                            if (n == 0 && i == 0) {
+                                htmlstr += "<td  bgcolor=\"green\"  style=\"color:#ffffff\">1.3</td>";
+                            } else {
+
+                                titlestr = "";
+                                funstr = "";
+                                if (json[key][attrs[i]] !== undefined) {
+                                    if (json[key][attrs[i]].s_leibie == "ai") {
+                                        titlestr = json[key][attrs[i]].val;
+                                        if (json[key][attrs[i]].s_attr == "s_shuishen" || json[key][attrs[i]].s_attr == "s_dianliu_1" || json[key][attrs[i]].s_attr == "s_dianliu_2") {
+                                            funstr = "onclick=showdanceng(\"" + json[key][attrs[i]].zhyy_rtu_id + "\",\"" + json[key][attrs[i]].zhyy_yangzhiqu_id + "\",\"" + json[key][attrs[i]].s_attr + "\")";
+                                        } else {
+                                            funstr = "onclick=showduoceng(\"" + json[key][attrs[i]].zhyy_rtu_id + "\",\"" + json[key][attrs[i]].zhyy_yangzhiqu_id + "\",\"" + json[key][attrs[i]].s_attr + "\")";
+                                        }
+
+                                    } else {
+                                        if (titlestr = json[key][attrs[i]].val == "1") {
+                                            titlestr = "正常";
+                                        } else {
+                                            titlestr = "异常";
+                                        }
                                     }
-                                    
-                                }else{
-                                    if(titlestr = json[key][attrs[i]].val == "1"){
-                                        titlestr = "正常";
-                                    }else{
-                                        titlestr = "异常";
-                                    }
+                                    htmlstr += "<td " + funstr + " bgcolor=\"" + json[key][attrs[i]].style + "\" title=\"" + json[key][attrs[i]].title + "\" style=\"color:#ffffff\">" + titlestr + "</td>";
+                                } else {
+                                    htmlstr += "<td >暂无数据</td>";
                                 }
-                                htmlstr += "<td "+funstr+" bgcolor=\""+json[key][attrs[i]].style+"\" title=\""+json[key][attrs[i]].title+"\" style=\"color:#ffffff\">"+titlestr+"</td>";
-                            }else{
-                                htmlstr += "<td >暂无数据</td>";
                             }
                         }
                         htmlstr += "</tr>";
@@ -370,7 +376,7 @@
                         //inc = Math.round((Math.random() - 0.1) * 20);
                         //alert("update yandu");
                         if (rtu != null) {
-                            newVal = rtu.rtuai[5].va;
+                            newVal = rtu.rtuai[0].va;
                             $("#data_wh_yd").empty();
                             $("#data_wh_yd").append("盐度:" + newVal);
                             point.update(newVal);
@@ -481,7 +487,7 @@
                         //inc = Math.round((Math.random() - 0.1) * 20);
                         //alert("update yandu");
                         if (rtu != null) {
-                            newVal = rtu.rtuai[6].va;
+                            newVal = rtu.rtuai[3].va;
                             $("#data_wh_sw").empty();
                             $("#data_wh_sw").append("水温:" + newVal);
                             point.update(newVal);
@@ -588,7 +594,8 @@
                         //inc = Math.round((Math.random() - 0.1) * 20);
                         //alert("update yandu");
                         if (rtu != null) {
-                            newVal = rtu.rtuai[7].va;
+                            // newVal = rtu.rtuai[7].va;
+                            newVal = 1.3;
                             $("#data_wh_cx").empty();
                             $("#data_wh_cx").append("潮汐:" + newVal);
                             point.update(newVal);
@@ -707,7 +714,7 @@
                         //inc = Math.round((Math.random() - 0.1) * 20);
                         //alert("update yandu");
                         if (rtu != null) {
-                            newVal = rtu.rtuai[3].va;
+                            newVal = rtu.rtuai[2].va;
                             $("#data_wh_ph").empty();
                             $("#data_wh_ph").append("pH:" + newVal);
                             point.update(newVal);
@@ -818,7 +825,7 @@
                         //inc = Math.round((Math.random() - 0.1) * 20);
                         //alert("update yandu");
                         if (rtu != null) {
-                            newVal = rtu.rtuai[4].va;
+                            newVal = rtu.rtuai[1].va;
                             $("#data_wh_d02").empty();
                             $("#data_wh_d02").append("DO2:" + newVal);
                             point.update(newVal);
@@ -966,7 +973,7 @@
         function getWhSzData() {
             $.ajax({
                     url: whszdata_url,
-                    data: {rtuid: "00010001"},
+                    data: {rtuid: "00010003"},
                     type: 'POST',
                     timeout: fw_config.ajax_timeout,
                     dataFilter: function (json) {
@@ -977,11 +984,17 @@
                         //alert("getWsData");
                         rtu = json;
                         if (!init_flag) {
-                            load_yandu(json.rtuai[5].va);
-                            load_shuiwen(json.rtuai[6].va);
-                            load_chaoxi(json.rtuai[7].va);
-                            load_d02(json.rtuai[4].va);
-                            load_ph(json.rtuai[3].va);
+                            // load_yandu(json.rtuai[5].va);
+                            // load_shuiwen(json.rtuai[6].va);
+                            // load_chaoxi(json.rtuai[7].va);
+                            // load_d02(json.rtuai[4].va);
+                            // load_ph(json.rtuai[3].va);
+                            load_yandu(json.rtuai[0].va);
+                            load_shuiwen(json.rtuai[3].va);
+                            //load_chaoxi(json.rtuai[7].va);
+                            load_chaoxi(1.3);
+                            load_d02(json.rtuai[1].va);
+                            load_ph(json.rtuai[2].va);
                             init_flag = true;
                         }
       //                        alert(json.datatime);

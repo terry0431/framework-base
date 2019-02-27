@@ -1,10 +1,9 @@
 package com.os.framework.imitator;
 
-import com.os.framework.core.config.HostInfo;
+import com.os.framework.handler.serialize.*;
+import core.config.HostInfo;
 import com.os.framework.imitator.handler.ImitatorHandler;
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -12,15 +11,11 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
-import io.netty.handler.codec.LineBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.serialization.ClassResolvers;
 import io.netty.handler.codec.serialization.ObjectDecoder;
 import io.netty.handler.codec.serialization.ObjectEncoder;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -31,7 +26,7 @@ import io.netty.util.concurrent.GenericFutureListener;
  * @author: wangbo
  * @create: 2019-02-25 20:40
  **/
-public class JmRtuImitator implements Imitator{
+public class JmRtuImitator {
 
     JmRtuImitator(){
         int im_num = 10;
@@ -54,8 +49,22 @@ public class JmRtuImitator implements Imitator{
 //                            socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
 //                            socketChannel.pipeline().addLast(new StringEncoder(CharsetUtil.UTF_8));
 //                            socketChannel.pipeline().addLast(new StringDecoder(CharsetUtil.UTF_8));
-                            socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
-                            socketChannel.pipeline().addLast(new ObjectEncoder() );
+//                            socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
+//                            socketChannel.pipeline().addLast(new ObjectEncoder() );
+
+                            /*socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65536,0,4,0,4));
+                            socketChannel.pipeline().addLast(new MessagePackDecoder());
+                            socketChannel.pipeline().addLast(new LengthFieldPrepender(4));
+                            socketChannel.pipeline().addLast(new MessagePackEncoder());*/
+
+                            /*socketChannel.pipeline().addLast(MarshalingFactory.buildMarshallingEncoder()); //
+                            socketChannel.pipeline().addLast(MarshalingFactory.buildMarshallingDecoder()); //*/
+
+                            //FastJson  序列化
+                            socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65536,0,4,0,4));
+                            socketChannel.pipeline().addLast(new FastJsonDecoder()); //
+                            socketChannel.pipeline().addLast(new LengthFieldPrepender(4));  //设置后客户端无法建立连接
+                            socketChannel.pipeline().addLast(new FastJsonEncoder()); //
                             socketChannel.pipeline().addLast(new ImitatorHandler());
                         }
                     });

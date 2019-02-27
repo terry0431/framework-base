@@ -6,7 +6,7 @@ package com.os.framework.web.socket;
  * and open the template in the editor.
  */
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.os.framework.core.util.BinaryConversionUtil;
+import core.util.BinaryConversionUtil;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.web.intef.zhyy.WaterConveyanceIntfc;
 import com.os.framework.web.util.crc.CRCUtil;

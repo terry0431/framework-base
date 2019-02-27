@@ -5,26 +5,14 @@ package com.os.framework.web.socket;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.os.framework.core.util.StringUtil;
-import com.os.framework.db.dao.MainDao;
-import com.os.framework.db.util.PKBean;
-import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
-import java.nio.channels.SelectionKey;
-import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
 /**
  *

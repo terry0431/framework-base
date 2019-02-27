@@ -1,12 +1,8 @@
 package com.os.framework.transceriver.server.handler;
 
-import com.os.framework.core.config.HostInfo;
-import com.os.framework.transceriver.vo.RtuEquipment;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
+import com.os.framework.vo.transceriver.RtuEquipment;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.util.CharsetUtil;
 import io.netty.util.ReferenceCountUtil;
 
 /**
@@ -47,6 +43,7 @@ public class ServerHandler  extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx,Object msg)throws Exception{
         try {
+            System.out.println("********* " + msg.getClass());
             RtuEquipment equipment = (RtuEquipment)msg;
 
             System.out.println("{服务器}" + equipment.getRtuid() );

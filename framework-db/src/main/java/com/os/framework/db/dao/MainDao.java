@@ -10,11 +10,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import com.os.framework.core.config.Config;
-import com.os.framework.db.factory.ConnectionFactory;
+import core.config.Config;
 import com.os.framework.db.factory.DbPoolConnection;
 import com.os.framework.db.util.PKBean;
-import com.os.framework.core.exception.DBException;
+import core.exception.DBException;
 
 /**
  * 主程序DAO

@@ -45,6 +45,9 @@
         <c3p0.version>0.9.1.2</c3p0.version>
         <druid.version>1.1.9</druid.version>
         <netty.version>4.1.31.Final</netty.version>
+        <msgpack.version>0.6.12</msgpack.version>
+        <jboss-marshalling.version>2.0.6.Final</jboss-marshalling.version>
+        <fastjson.version>1.2.51</fastjson.version>
         <!-- 文件拷贝时的编码 -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -246,6 +249,30 @@
                 <artifactId>netty-all</artifactId>
                 <version>${netty.version}</version>
             </dependency>
+            <!-- ================================================= jboss.marshalling================================ -->
+            <dependency>
+                <groupId>org.jboss.marshalling</groupId>
+                <artifactId>jboss-marshalling</artifactId>
+                <version>${jboss-marshalling.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.jboss.marshalling</groupId>
+                <artifactId>jboss-marshalling-serial</artifactId>
+                <version>${jboss-marshalling.version}</version>
+            </dependency>
+            <!-- ================================================= fastjson ======================================-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+            <!-- ================================================= msgpack ======================================-->
+            <dependency>
+                <groupId>org.msgpack</groupId>
+                <artifactId>msgpack</artifactId>
+                <version>${msgpack.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
     
@@ -255,6 +282,8 @@
         <module>framework-web</module>
         <module>framework-transceriver</module>
         <module>framework-imitator</module>
+        <module>framework-vo</module>
+        <module>framework-handler</module>
     </modules>
 
 </project>

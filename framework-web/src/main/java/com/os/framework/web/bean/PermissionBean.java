@@ -1,6 +1,6 @@
 package com.os.framework.web.bean;
-import com.os.framework.core.config.ConfigBean;
-import com.os.framework.core.exception.DBException;
+import core.config.ConfigBean;
+import core.exception.DBException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

@@ -1,8 +1,8 @@
 package com.os.framework.db.util;
 
-import com.os.framework.core.config.Config;
-import com.os.framework.core.exception.DBException;
-import com.os.framework.core.util.DateUtil;
+import core.config.Config;
+import core.exception.DBException;
+import core.util.DateUtil;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;
@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.os.framework.db.dao.Dao;
-import com.os.framework.db.factory.ConnectionFactory;
 import com.os.framework.db.factory.DbPoolConnection;
 import com.os.framework.db.mapping.TableInfoMapping;
 import com.os.framework.db.mod.FieldMod;

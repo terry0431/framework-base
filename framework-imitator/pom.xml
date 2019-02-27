@@ -150,7 +150,12 @@
         </dependency>
         <dependency>
             <groupId>com.os.framework</groupId>
-            <artifactId>framework-transceriver</artifactId>
+            <artifactId>framework-vo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.os.framework</groupId>
+            <artifactId>framework-handler</artifactId>
             <version>${project.version}</version>
         </dependency>
         <!-- ================================================= quartz =============================================== -->
@@ -177,7 +182,25 @@
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
         </dependency>
-
+        <!-- ================================================= jboss.marshalling================================ -->
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.marshalling</groupId>
+            <artifactId>jboss-marshalling-serial</artifactId>
+        </dependency>
+        <!-- ================================================= fastjson ====================================== -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+        </dependency>
+        <!-- ================================================= msgpack ====================================== -->
+        <dependency>
+            <groupId>org.msgpack</groupId>
+            <artifactId>msgpack</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

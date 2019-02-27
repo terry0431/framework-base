@@ -1,11 +1,9 @@
 package com.os.framework.transceriver.server;
 
-import com.os.framework.core.config.HostInfo;
+import com.os.framework.handler.serialize.*;
+import core.config.HostInfo;
 import com.os.framework.transceriver.server.handler.ServerHandler;
-import com.os.framework.transceriver.vo.RtuEquipment;
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -13,15 +11,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.DelimiterBasedFrameDecoder;
-import io.netty.handler.codec.FixedLengthFrameDecoder;
-import io.netty.handler.codec.serialization.ClassResolver;
-import io.netty.handler.codec.serialization.ClassResolvers;
-import io.netty.handler.codec.serialization.ObjectDecoder;
-import io.netty.handler.codec.serialization.ObjectEncoder;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.CharsetUtil;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
 
 /**
  * @program: framework-base
@@ -50,15 +41,30 @@ public class Server {
             serverBootstrap.childHandler(new ChannelInitializer<SocketChannel>() {
                 @Override
                 protected void initChannel(SocketChannel socketChannel) throws Exception {
-                    ByteBuf delimiter = Unpooled.copiedBuffer(HostInfo.SEPARATOR.getBytes() );
+//                    ByteBuf delimiter = Unpooled.copiedBuffer(HostInfo.SEPARATOR.getBytes() ); //字符串传输设置分隔符
+
 
 //                    socketChannel.pipeline().addLast(new FixedLengthFrameDecoder(200)); //设置文件块
 //                    //socketChannel.pipeline().addLast(new LineBasedFrameDecoder(1024)); //拆包器
 //                    socketChannel.pipeline().addLast(new DelimiterBasedFrameDecoder(1024,delimiter));
 //                    socketChannel.pipeline().addLast(new StringEncoder(CharsetUtil.UTF_8));
 //                    socketChannel.pipeline().addLast(new StringDecoder(CharsetUtil.UTF_8));
-                    socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));
-                    socketChannel.pipeline().addLast(new ObjectEncoder() );
+//                    socketChannel.pipeline().addLast(new ObjectDecoder(ClassResolvers.cacheDisabled(this.getClass().getClassLoader())));//java自带序列化
+//                    socketChannel.pipeline().addLast(new ObjectEncoder() ); //java自带序列化
+                    //MessagePack 序列化
+                    /*socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65536,0,4,0,4));
+                    socketChannel.pipeline().addLast(new MessagePackDecoder());
+                    socketChannel.pipeline().addLast(new LengthFieldPrepender(4));
+                    socketChannel.pipeline().addLast(new MessagePackEncoder());*/
+                    //Marshalling 序列化
+                    /*socketChannel.pipeline().addLast(MarshalingFactory.buildMarshallingEncoder()); //
+                    socketChannel.pipeline().addLast(MarshalingFactory.buildMarshallingDecoder()); //*/
+                    //FastJson  序列化
+                    socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65536,0,4,0,4));
+                    socketChannel.pipeline().addLast(new FastJsonDecoder()); //
+                    socketChannel.pipeline().addLast(new LengthFieldPrepender(4));  //设置后客户端无法建立连接
+                    socketChannel.pipeline().addLast(new FastJsonEncoder()); //
+
                     socketChannel.pipeline().addLast(new ServerHandler()); //追加处理器
                 }
             });
