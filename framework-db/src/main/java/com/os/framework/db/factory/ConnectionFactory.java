@@ -7,12 +7,12 @@ import java.util.Properties;
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
 import com.os.framework.db.mod.app.AppMod;
-import core.config.ConfigBean;
-import core.config.PathBean;
-import core.exception.DBException;
-import core.secret.DesBean;
+import com.os.framework.core.config.ConfigBean;
+import com.os.framework.core.config.PathBean;
+import com.os.framework.core.exception.DBException;
+import com.os.framework.core.secret.DesBean;
 import com.os.framework.db.mapping.AppMapping;
-import core.util.PropertiesUtil;
+import com.os.framework.core.util.PropertiesUtil;
 import java.util.HashMap;
 
 /**

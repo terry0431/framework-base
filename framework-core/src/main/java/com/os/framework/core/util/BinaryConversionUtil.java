@@ -1,4 +1,4 @@
-package core.util;
+package com.os.framework.core.util;
 
 public class BinaryConversionUtil {
 	private static final char[] HEX_CHAR = {'0', '1', '2', '3', '4', '5',

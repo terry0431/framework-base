@@ -1,4 +1,4 @@
-package core.exception;
+package com.os.framework.core.exception;
 
 public class BSException extends RuntimeException {
 

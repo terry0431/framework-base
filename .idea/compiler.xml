@@ -8,6 +8,10 @@
         <outputRelativeToContentRoot value="true" />
         <module name="framework-core" />
         <module name="framework-db" />
+        <module name="framework-handler" />
+        <module name="framework-imitator" />
+        <module name="framework-transceriver" />
+        <module name="framework-vo" />
         <module name="framework-web" />
       </profile>
     </annotationProcessing>
@@ -15,5 +19,14 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_STRING" value="-encoding UTF8" />
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="framework-core" options="" />
+      <module name="framework-db" options="" />
+      <module name="framework-handler" options="" />
+      <module name="framework-imitator" options="" />
+      <module name="framework-transceriver" options="" />
+      <module name="framework-vo" options="" />
+      <module name="framework-web" options="" />
+    </option>
   </component>
 </project>

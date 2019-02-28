@@ -1,4 +1,4 @@
-package core.util;
+package com.os.framework.core.util;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -7,8 +7,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 
-import core.config.Config;
-import core.exception.BSException;
+import com.os.framework.core.config.Config;
+import com.os.framework.core.exception.BSException;
 
 public class DateUtil {
         

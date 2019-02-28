@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.util.DateUtil;
+import com.os.framework.core.util.DateUtil;
 
 import java.util.Date;
 import org.springframework.stereotype.Controller;

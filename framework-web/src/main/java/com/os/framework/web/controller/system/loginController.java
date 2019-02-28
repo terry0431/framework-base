@@ -1,6 +1,6 @@
 package com.os.framework.web.controller.system;
 
-import core.secret.DesBean;
+import com.os.framework.core.secret.DesBean;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.web.bean.PermissionBean;
 import com.os.framework.web.mod.system.User;

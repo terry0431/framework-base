@@ -7,7 +7,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>智慧渔业信息管理平台</title>
-        <LINK href="index_css/loginin.css" rel=stylesheet type=text/css>
+        <LINK href="common/index_css/loginin.css" rel=stylesheet type=text/css>
         <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
         <script src="<%=path%>/js/ui/ui.js"></script>
     </head>

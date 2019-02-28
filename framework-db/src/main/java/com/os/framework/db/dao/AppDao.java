@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import com.os.framework.db.mod.app.AppMod;
 import com.os.framework.db.factory.ConnectionFactory;
 import com.os.framework.db.mapping.AppMapping;
-import core.exception.DBException;
+import com.os.framework.core.exception.DBException;
 
 /**
  * @author wangbo

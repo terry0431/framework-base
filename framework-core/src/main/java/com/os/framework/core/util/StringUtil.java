@@ -1,4 +1,4 @@
-package core.util;
+package com.os.framework.core.util;
 
 /**
  * 字符串工具类

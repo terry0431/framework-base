@@ -2,7 +2,7 @@ package com.os.framework.quartz.jobs.bundle.zhyy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import core.util.DateUtil;
+import com.os.framework.core.util.DateUtil;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;

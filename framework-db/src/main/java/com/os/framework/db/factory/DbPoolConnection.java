@@ -6,8 +6,8 @@ import java.util.Properties;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 import com.alibaba.druid.pool.DruidPooledConnection;
-import core.config.PathBean;
-import core.util.PropertiesUtil;
+import com.os.framework.core.config.PathBean;
+import com.os.framework.core.util.PropertiesUtil;
 
 public class DbPoolConnection {
 	private static DbPoolConnection databasePool=null;

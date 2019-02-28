@@ -1,6 +1,6 @@
 package com.os.framework.web.listener;
 
-import core.config.PathBean;
+import com.os.framework.core.config.PathBean;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

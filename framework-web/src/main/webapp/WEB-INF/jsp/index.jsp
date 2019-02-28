@@ -13,7 +13,7 @@
         <script type="text/javascript" src="<%=path%>/js/index.js"></script>
 
         <link rel="Shortcut Icon" href="<%=path%>/images/icon.ico"/>
-        <LINK href="<%=path%>/index_css/loginin.css" rel=stylesheet type=text/css />
+        <LINK href="<%=path%>/common/index_css/loginin.css" rel=stylesheet type=text/css />
 
     </head>
         <%

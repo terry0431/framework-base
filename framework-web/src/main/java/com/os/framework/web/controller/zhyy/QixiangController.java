@@ -1,6 +1,6 @@
 package com.os.framework.web.controller.zhyy;
 
-import core.util.DateUtil;
+import com.os.framework.core.util.DateUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -92,5 +92,4 @@ public class QixiangController {
         request.setAttribute("id", id);
         return "zhyy/qixiang/view";
     }
-
 }

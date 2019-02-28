@@ -1,4 +1,4 @@
-package core.config;
+package com.os.framework.core.config;
 
 public class ConfigBean {
 //	public static final String DEF_DATE_FORMAT = "def_date_format";	//页面显示缺省日期格式	关联 config.prop

@@ -1,4 +1,4 @@
-package core.secret;
+package com.os.framework.core.secret;
 
 /**
  * des加密bean

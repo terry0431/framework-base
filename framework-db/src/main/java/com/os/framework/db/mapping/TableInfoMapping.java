@@ -1,6 +1,6 @@
 package com.os.framework.db.mapping;
 
-import core.config.Config;
+import com.os.framework.core.config.Config;
 import java.util.Map;
 
 import com.os.framework.db.mod.TableMod;

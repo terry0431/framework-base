@@ -1,4 +1,4 @@
-package core.config;
+package com.os.framework.core.config;
 
 import java.io.File;
 

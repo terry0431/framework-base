@@ -1,8 +1,8 @@
 package com.os.framework.db.util;
 
-import core.config.Config;
-import core.exception.DBException;
-import core.util.DateUtil;
+import com.os.framework.core.config.Config;
+import com.os.framework.core.exception.DBException;
+import com.os.framework.core.util.DateUtil;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.PreparedStatement;

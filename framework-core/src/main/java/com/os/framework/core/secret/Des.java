@@ -1,4 +1,4 @@
-package core.secret;
+package com.os.framework.core.secret;
 
 import java.security.Key;
 import java.util.Random;

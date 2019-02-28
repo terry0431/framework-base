@@ -1,12 +1,12 @@
-package core.util;
+package com.os.framework.core.util;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.Properties;
 
-import core.exception.BSException;
-import core.secret.DesBean;
+import com.os.framework.core.exception.BSException;
+import com.os.framework.core.secret.DesBean;
 
 public class PropertiesUtil {
 	

@@ -1,6 +1,6 @@
 package com.os.framework.db.util;
 
-import core.config.Config;
+import com.os.framework.core.config.Config;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -19,9 +19,9 @@ import com.os.framework.db.factory.DbPoolConnection;
 import com.os.framework.db.mapping.TableInfoMapping;
 import com.os.framework.db.mod.FieldMod;
 import com.os.framework.db.mod.TableMod;
-import core.exception.DBException;
-import core.util.DateUtil;
-import core.util.NumberUtil;
+import com.os.framework.core.exception.DBException;
+import com.os.framework.core.util.DateUtil;
+import com.os.framework.core.util.NumberUtil;
 import java.sql.SQLException;
 
 public class OracleDBBean extends DBBean {

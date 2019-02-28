@@ -1,7 +1,7 @@
 package com.os.framework.transceriver.server;
 
 import com.os.framework.handler.serialize.*;
-import core.config.HostInfo;
+import com.os.framework.core.config.HostInfo;
 import com.os.framework.transceriver.server.handler.ServerHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;

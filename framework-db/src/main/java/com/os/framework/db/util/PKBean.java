@@ -3,7 +3,7 @@ package com.os.framework.db.util;
 import java.util.Map;
 
 import com.os.framework.db.dao.Dao;
-import core.exception.DBException;
+import com.os.framework.core.exception.DBException;
 
 public abstract class PKBean {
 

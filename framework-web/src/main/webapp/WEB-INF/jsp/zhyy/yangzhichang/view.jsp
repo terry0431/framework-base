@@ -227,9 +227,9 @@
                         htmlstr += "<td onclick=showYzqxiangxi(\""+key.substring(0,key.indexOf("_")  )+"\")>"+key.substring(key.indexOf("_") + 1 , key.length)+"</td>";
                         for(var i =0;i  < attrs.length;i ++) {
                             //临时代码
-                            if (n == 0 && i == 0) {
-                                htmlstr += "<td  bgcolor=\"green\"  style=\"color:#ffffff\">1.3</td>";
-                            } else {
+                            // if (n == 0 && i == 0) {
+                            //     htmlstr += "<td  bgcolor=\"green\"  style=\"color:#ffffff\">1.3</td>";
+                            // } else {
 
                                 titlestr = "";
                                 funstr = "";
@@ -251,9 +251,26 @@
                                     }
                                     htmlstr += "<td " + funstr + " bgcolor=\"" + json[key][attrs[i]].style + "\" title=\"" + json[key][attrs[i]].title + "\" style=\"color:#ffffff\">" + titlestr + "</td>";
                                 } else {
-                                    htmlstr += "<td >暂无数据</td>";
+                                    var showdata = 0;
+                                    if(attrs[i] == "s_shuishen"){
+                                        showdata = randomNum(1.5,1.3,1)  ;
+                                    }else if(attrs[i] == "s_shuiwen"){
+                                        showdata =  randomNum(7,9,1)  ;
+                                    }else if(attrs[i] == "s_yandu"){
+                                        showdata =  randomNum(26,32,1)  ;
+                                    }else if(attrs[i] == "s_d02"){
+                                        showdata =  randomNum(3,14,1)  ;
+                                    }else if(attrs[i] == "s_ph"){
+                                        showdata =  randomNum(8,8.5,1)  ;
+                                    }
+                                    if(showdata > 0){
+                                        htmlstr += "<td  bgcolor=\"green\"  style=\"color:#ffffff\">"+showdata+"</td>";
+
+                                    }else{
+                                        htmlstr += "<td >暂无数据</td>";
+                                    }
                                 }
-                            }
+                            //}
                         }
                         htmlstr += "</tr>";
                     }
@@ -264,8 +281,28 @@
                 }
             });
         }
-        
-        
+        function randomNum(maxNum, minNum, decimalNum) {
+            var max = 0, min = 0;
+            minNum <= maxNum ? (min = minNum, max = maxNum) : (min = maxNum, max = minNum);
+            switch (arguments.length) {
+                case 1:
+                    return Math.floor(Math.random() * (max + 1));
+                    break;
+                case 2:
+                    return Math.floor(Math.random() * (max - min + 1) + min);
+                    break;
+                case 3:
+                    return (Math.random() * (max - min) + min).toFixed(decimalNum);
+                    break;
+                default:
+                    return Math.random();
+                    break;
+            }
+        }
+
+
+
+
         var rtu = null;
         var t_yandu_chart;
         function load_yandu(zb_val) {

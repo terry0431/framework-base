@@ -5,7 +5,7 @@
  */
 package com.os.framework.db.dao;
 
-import core.config.PathBean;
+import com.os.framework.core.config.PathBean;
 import com.os.framework.db.mapping.TableInfoMapping;
 import java.io.File;
 import java.util.List;

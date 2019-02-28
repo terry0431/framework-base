@@ -12,9 +12,9 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
-import core.exception.DBException;
-import core.util.DateUtil;
-import core.util.NumberUtil;
+import com.os.framework.core.exception.DBException;
+import com.os.framework.core.util.DateUtil;
+import com.os.framework.core.util.NumberUtil;
 import com.os.framework.db.dao.Dao;
 import com.os.framework.db.factory.DbPoolConnection;
 import com.os.framework.db.mapping.TableInfoMapping;

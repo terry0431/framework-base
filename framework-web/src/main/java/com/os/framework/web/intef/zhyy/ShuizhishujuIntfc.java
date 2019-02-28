@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import core.util.DateUtil;
+import com.os.framework.core.util.DateUtil;
 import java.util.Calendar;
 import java.util.Date;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -294,7 +294,8 @@ public class ShuizhishujuIntfc {
                 }
                 briqi = DateUtil.convertDateToString(bdate);
                 eriqi = DateUtil.convertDateToString(edate);
-                sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_caijishijian >= ? and s_caijishijian <= ? and s_flag =1 order by s_cengshu,id";
+                //sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_caijishijian >= ? and s_caijishijian <= ? and s_flag =1 order by s_cengshu,id";
+				sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_caijishijian >= ? and s_caijishijian <= ?  order by s_cengshu,id";
 
                 list = mainDao.queryForList(sql , new Object[]{rtuid,yzqid,briqi,eriqi });
                 
@@ -309,7 +310,8 @@ public class ShuizhishujuIntfc {
     //            int day = 20;
                 //sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_flag=1 and s_year=? and s_month=? and s_day = ? and s_cengshu > 0 order by s_cengshu,id";
                 //暂时去掉di过滤条件
-                sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_year=? and s_month=? and s_day = ? and s_flag =1 order by s_cengshu,id";
+                //sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_year=? and s_month=? and s_day = ? and s_flag =1 order by s_cengshu,id";
+				sql = "select * from zhyy_shuizhishuju where zhyy_rtu_id=? and zhyy_yangzhiqu_id=? and s_year=? and s_month=? and s_day = ?  order by s_cengshu,id";
                 
     //            sql = "select * from zhyy_shuizhi where  zhyy_shebei_id=? and s_year=? and s_month=? and s_day = ?  and s_ct_cengshu = ?";
                 list = mainDao.queryForList(sql , new Object[]{rtuid,yzqid,year,month,day });

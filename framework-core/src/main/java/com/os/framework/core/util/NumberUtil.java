@@ -1,10 +1,9 @@
-package core.util;
+package com.os.framework.core.util;
 
 import java.text.DecimalFormat;
 
 
-
-import core.exception.BSException;
+import com.os.framework.core.exception.BSException;
 
 public class NumberUtil {
 

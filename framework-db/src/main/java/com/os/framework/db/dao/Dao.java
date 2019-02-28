@@ -19,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 //import oracle.sql.CLOB;
-import core.exception.DBException;
-import core.secret.Des;
+import com.os.framework.core.exception.DBException;
+import com.os.framework.core.secret.Des;
 import com.os.framework.db.mod.TableMod;
 import com.os.framework.db.util.DBBean;
 
