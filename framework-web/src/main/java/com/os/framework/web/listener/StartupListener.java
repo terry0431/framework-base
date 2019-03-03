@@ -18,6 +18,7 @@ import com.os.framework.web.service.zhyy.CheckRTUData;
 import com.os.framework.web.service.zhyy.Message;
 import com.os.framework.web.socket.EContorlServer;
 import com.os.framework.web.socket.NIOServer;
+import com.os.framework.web.subscribe.SubscribeClient;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
@@ -77,9 +78,8 @@ public class StartupListener implements ServletContextListener {
             public void run() {
                 // TODO Auto-generated method stub
                 try {
-                    NIOServer nserver = new NIOServer();
-                    nserver.start();
-                    System.out.println("nserver.star successful ====================");
+                    SubscribeClient.getInstance().run();
+                    System.out.println("SubscribeClient successful ====================");
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
