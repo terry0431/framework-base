@@ -1,6 +1,6 @@
 package com.os.framework.quartz.jobs;
 
-import com.os.framework.web.util.wx.WeiXinUtils;
+import com.os.framework.core.util.wx.WeiXinUtils;
 import java.util.Date;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

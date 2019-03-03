@@ -1,7 +1,7 @@
 package com.os.framework.quartz.jobs.bundle.zhyy;
 
-import com.os.framework.web.handler.econtorl.EContorlAdapterInterface;
-import com.os.framework.web.handler.econtorl.EContorlPoolModelJMRtuAdapter;
+import com.os.framework.web.handler.zhyy.EContorlAdapterInterface;
+import com.os.framework.web.handler.zhyy.EContorlPoolModelJMRtuAdapter;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;

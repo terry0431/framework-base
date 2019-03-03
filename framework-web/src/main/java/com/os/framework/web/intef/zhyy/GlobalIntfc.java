@@ -7,7 +7,7 @@ import com.os.framework.db.dao.MainDao;
 import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
 import com.os.framework.web.cache.zhyy.SystemCache;
 import com.os.framework.web.socket.NIOServer;
-import com.os.framework.web.mod.system.User;
+import com.os.framework.vo.manager.User;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -27,13 +27,13 @@
     <div data-role="main" class="ui-content">
         <div class="pet_circle_nav">
             <ul class="pet_circle_nav_list">
-                <li><a href="" class="iconfont pet_nav_zxjc "><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/zxjc.png" /></a><span>池塘监测</span></li>
-                <li><a href="" class="iconfont pet_nav_sbgl "><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/sbgl.png" /></a><span>设备管理</span></li>
-                <li><a href="" class="iconfont pet_nav_yzzx"><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/yzzx.png" /></a><span>养殖咨询</span></li>
-                <li><a href="" class="iconfont pet_nav_zxjc "><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/yyzx.png" /></a><span>渔业咨询</span></li>
-                <li><a href="" class="iconfont pet_nav_sscz "><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/sskz.png" /></a><span>输水控制</span></li>
-                <li><a href="" class="iconfont pet_nav_sscz "><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/scgl.png" /></a><span>生产管理</span></li>
-                <li><a href="" class="iconfont pet_nav_yzzx"><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/qxss.png" /></a><span>气象监测</span></li>
+                <li><a href="" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/zxjc.png" /></a><span>池塘监测</span></li>
+                <li><a href="" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/sbgl.png" /></a><span>设备管理</span></li>
+                <li><a href="" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/yzzx.png" /></a><span>养殖咨询</span></li>
+                <li><a href="" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/yyzx.png" /></a><span>渔业咨询</span></li>
+                <li><a data-ajax="false" href="<%=path%>/con/mobile/zhyy/waterConveyance/index" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/sskz.png" /></a><span>输水控制</span></li>
+                <li><a href="" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/scgl.png" /></a><span>生产管理</span></li>
+                <li><a href="" ><img width="55" height="55" src="<%=path%>/images/zhyy/mobile/qxss.png" /></a><span>气象监测</span></li>
             </ul>
         </div>
 

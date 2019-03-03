@@ -284,6 +284,7 @@
         <module>framework-imitator</module>
         <module>framework-vo</module>
         <module>framework-handler</module>
+        <module>framework-mq</module>
     </modules>
 
 </project>

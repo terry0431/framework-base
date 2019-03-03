@@ -1,6 +1,6 @@
 package com.os.framework.rmi;
 
-import com.os.framework.web.bean.CommonBean;
+import com.os.framework.core.config.CommonBean;
 import java.rmi.Naming;
 import java.rmi.registry.LocateRegistry;
 

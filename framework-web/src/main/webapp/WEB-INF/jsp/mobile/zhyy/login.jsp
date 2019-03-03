@@ -10,12 +10,13 @@
     <%@ include file="../include/common.jsp" %>
     <script src="<%=path%>/common/mobile/js/common.js"></script>
     <script type="text/javascript">
-        var id = "2";
+        var id = "";
         var getMenber_url = "<%=path%>/wx/getMenber";
-        var apply_url = "<%=path%>/ifs/zhyy/zhanghao/apply";
+        var apply_url = "<%=path%>/ifs/zhyy/menber/apply";
         function menberLogin() {
+            alert("menberLogin");
             var code = getUrlParam("code");
-            alert("code:" + code);
+            //alert("code:" + code);
             var menberlogin_serverurl = getMenber_url;
             $.ajax({
                 url: menberlogin_serverurl,
@@ -24,19 +25,23 @@
                 //dataType:'JSONP',
                 data: {code: code},
                 success: function (data) {
-                    alert("ok " + data.z_state);
-                    alert("ok " + data.z_state);
+                    //alert("ok " + data.z_state);
+                    //alert("ok " + data.z_state);
                     if (data.z_state == 1) {//审核通过
                         //跳转主页
-                        $.mobile.changePage("index.html", "slideup");
+                        $.mobile.changePage("<%=path%>/con/mobile/zhyy/index",  {
+                            transition: "slideup",
+                            changeHash: false
+                        });
                     } else if (data.z_state == -2) {//申请失败
                         //不做处理 可重新申请
                     } else if (data.z_state == -1) {//未申请
                         //不做处理 正常填写表单
-                    } else if (data.z_state == -0) {//等待审核
+                    } else if (data.z_state == 0) {//等待审核
                         //清除表单 显示 正在等待审核
                         $("#div_main").html("<h1>您的账号正在审核中。。。</h1>");
                     }
+                    alert("id:" + data.id + " data.z_state" + data.z_state);
                     id = data.id;
                 },
                 error: function (data) {
@@ -71,9 +76,9 @@
                     if (json == "1") {
                         //alert("保存成功");
                         $("#div_main").html("<h1>您的账号正在审核中。。。</h1>");
-                    } else if (data == "0") {
+                    } else  {
                         //alert("保存失败");
-                        $("#div_main").html("<h1>提交失败。。。</h1>");
+                        $("#div_main").html("<h1>"+json+"</h1>");
                     }
 //                        top.win.JC.table(top.win.initOption);
 //                        top.win.formDialog.close();
@@ -84,18 +89,13 @@
             });
         }
         $(function () {
+            menberLogin();
             $('#btn_submit').bind('click', apply);
             //$("#p_msg").show();
         })
         function showLoader() {
             //显示加载器.for jQuery Mobile 1.2.0
-            $.mobile.loading('show', {
-                text: '加载中...', //加载器中显示的文字
-                textVisible: true, //是否显示文字
-                theme: 'a',        //加载器主题样式a-e
-                textonly: false,   //是否只显示文字
-                html: ""           //要显示的html内容，如图片等
-            });
+            //menberLogin();
         }
         //隐藏加载器.for jQuery Mobile 1.2.0
         function hideLoader()

@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.os.framework.core.util.BinaryConversionUtil;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.web.intef.zhyy.WaterConveyanceIntfc;
-import com.os.framework.web.util.crc.CRCUtil;
+import com.os.framework.core.util.crc.CRCUtil;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;

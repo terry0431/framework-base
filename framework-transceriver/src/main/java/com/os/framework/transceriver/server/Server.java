@@ -72,8 +72,8 @@ public class Server {
             serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);//设置连接块的大小
             serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);//使用长连接
             //描述异步回调的处理操作
-            ChannelFuture future = serverBootstrap.bind(HostInfo.POST).sync(); //同步等待
-            System.out.println("服务器已启动 监听端口为:" + HostInfo.POST);
+            ChannelFuture future = serverBootstrap.bind(HostInfo.RTU_POST).sync(); //同步等待
+            System.out.println("服务器已启动 监听端口为:" + HostInfo.RTU_POST);
             future.channel().closeFuture().sync();//等到socket被关闭
         }finally {
             //关闭连接池

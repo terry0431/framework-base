@@ -2,8 +2,8 @@ package com.os.framework.web.controller.system;
 
 import com.os.framework.core.secret.DesBean;
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.web.bean.PermissionBean;
-import com.os.framework.web.mod.system.User;
+import com.os.framework.web.service.manager.PermissionBean;
+import com.os.framework.vo.manager.User;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

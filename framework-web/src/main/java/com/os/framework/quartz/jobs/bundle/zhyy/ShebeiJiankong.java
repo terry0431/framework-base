@@ -11,8 +11,8 @@ import java.util.Random;
 
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
-import com.os.framework.web.bean.sms.SMSBean;
-import com.os.framework.web.util.url.URLUtil;
+import com.os.framework.core.util.sms.SMSBean;
+import com.os.framework.core.util.url.URLUtil;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

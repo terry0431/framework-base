@@ -5,7 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.web.mod.system.User;
+import com.os.framework.vo.manager.User;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 /**
  * **信息控制类

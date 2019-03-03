@@ -10,10 +10,10 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
-import com.os.framework.web.bean.pool.Job;
-import com.os.framework.web.bean.pool.JobBean;
-import com.os.framework.web.handler.econtorl.EContorlAdapterInterface;
-import com.os.framework.web.handler.econtorl.EContorlPoolModelJMRtuAdapter;
+import com.os.framework.vo.zhyy.Job;
+import com.os.framework.web.handler.zhyy.WaterConveyanceHandler;
+import com.os.framework.web.handler.zhyy.EContorlAdapterInterface;
+import com.os.framework.web.handler.zhyy.EContorlPoolModelJMRtuAdapter;
 import com.os.framework.web.socket.EContorlServer;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -95,7 +95,7 @@ public class WaterConveyanceIntfc {
     public String runJob(String josnStr) {
         ObjectMapper mapper = new ObjectMapper();
         String yzcid = "hongyuan"; //之后从session中获取
-        JobBean jobbean = new JobBean();
+        WaterConveyanceHandler jobbean = new WaterConveyanceHandler();
         Job job = null;
         try {
             if (josnStr != null && !josnStr.equals("")) {
@@ -112,7 +112,7 @@ public class WaterConveyanceIntfc {
             e1.printStackTrace();
         }
         synchronized (yzcid) {
-            if (JobBean.getJob(yzcid) != null && JobBean.getJob(yzcid).isRun_state()) {
+            if (WaterConveyanceHandler.getJob(yzcid) != null && WaterConveyanceHandler.getJob(yzcid).isRun_state()) {
                 return "-1"; // 当前有任务正在运行
             } else {
                 try {
@@ -168,7 +168,7 @@ public class WaterConveyanceIntfc {
      * @Time:10:26
      **/
     public Job getJob(String rtuid, HttpServletRequest request) {
-        Job job = JobBean.getJob(rtuid);
+        Job job = WaterConveyanceHandler.getJob(rtuid);
         if (job != null) {
             job.setCurrenttime(System.currentTimeMillis());
         }

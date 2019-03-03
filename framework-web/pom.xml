@@ -176,6 +176,16 @@
             <artifactId>framework-db</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.os.framework</groupId>
+            <artifactId>framework-vo</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.os.framework</groupId>
+            <artifactId>framework-mq</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <!-- ================================================= quartz =============================================== -->
         <dependency>
             <groupId>org.quartz-scheduler</groupId>
@@ -199,6 +209,11 @@
         <dependency>
             <groupId>io.netty</groupId>
             <artifactId>netty-all</artifactId>
+        </dependency>
+        <!-- ================================================= fastjson ====================================== -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
         </dependency>
     </dependencies>
     <build>

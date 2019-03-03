@@ -1,6 +1,6 @@
 package com.os.framework.web.controller.wx;
 
-import com.os.framework.web.util.wx.SignUtil;
+import com.os.framework.core.util.wx.SignUtil;
 
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

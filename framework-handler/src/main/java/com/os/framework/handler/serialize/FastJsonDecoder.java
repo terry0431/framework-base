@@ -1,6 +1,7 @@
 package com.os.framework.handler.serialize;
 
 import com.alibaba.fastjson.JSON;
+import com.os.framework.vo.transceriver.RtuEquipment;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
@@ -20,6 +21,6 @@ public class FastJsonDecoder extends MessageToMessageDecoder<ByteBuf> {
         int len = msg.readableBytes();
         byte[] data = new byte[len];
         msg.getBytes(msg.readerIndex() ,data,0,len);
-        list.add(JSON.parseObject(new String(data) ) );
+        list.add(JSON.parseObject(new String(data) ).toJavaObject(RtuEquipment.class) );
     }
 }

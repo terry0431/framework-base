@@ -1,8 +1,8 @@
 package com.os.framework.web.controller.zhyy;
 
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.web.service.bundle.zhyy.Message;
-import com.os.framework.web.mod.system.User;
+import com.os.framework.web.service.zhyy.Message;
+import com.os.framework.vo.manager.User;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

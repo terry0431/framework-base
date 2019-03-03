@@ -8,7 +8,7 @@ import org.springframework.stereotype.Controller;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
 import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
-import com.os.framework.web.service.bundle.zhyy.CheckRTUData;
+import com.os.framework.web.service.zhyy.CheckRTUData;
 import com.os.framework.web.socket.NIOServer;
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,7 +1,7 @@
 package com.os.framework.web.controller.system;
 
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.web.util.wx.WeiXinUtils;
+import com.os.framework.core.util.wx.WeiXinUtils;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Controller;

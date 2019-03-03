@@ -12,11 +12,10 @@ import com.os.framework.db.mapping.TableInfoMapping;
 import com.os.framework.quartz.ScheduleUtil;
 import com.os.framework.quartz.jobs.bundle.zhyy.ShuiCengKongzhi;
 import com.os.framework.quartz.jobs.bundle.zhyy.YangshuijiKongzhi;
-import com.os.framework.web.bean.CommonBean;
+import com.os.framework.core.config.CommonBean;
 import com.os.framework.web.cache.zhyy.SystemCache;
-import com.os.framework.web.queue.zhyy.econtorl.MsgDelayQueue;
-import com.os.framework.web.service.bundle.zhyy.CheckRTUData;
-import com.os.framework.web.service.bundle.zhyy.Message;
+import com.os.framework.web.service.zhyy.CheckRTUData;
+import com.os.framework.web.service.zhyy.Message;
 import com.os.framework.web.socket.EContorlServer;
 import com.os.framework.web.socket.NIOServer;
 import org.quartz.Scheduler;
@@ -73,7 +72,6 @@ public class StartupListener implements ServletContextListener {
         Message message = new Message();
         message.initMsg();
         System.out.println("MsgBean init successful ====================");
-        
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -88,21 +86,35 @@ public class StartupListener implements ServletContextListener {
                 }
             }
         }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                try {
+//                    NIOServer nserver = new NIOServer();
+//                    nserver.start();
+//                    System.out.println("nserver.star successful ====================");
+//                } catch (Exception e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
         
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                // TODO Auto-generated method stub
-                try {
-                    EContorlServer eserver = new EContorlServer();
-                    eserver.start();
-                    System.out.println("eserver.star successful ====================");
-                } catch (Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }).start();
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                try {
+//                    EContorlServer eserver = new EContorlServer();
+//                    eserver.start();
+//                    System.out.println("eserver.star successful ====================");
+//                } catch (Exception e) {
+//                    // TODO Auto-generated catch block
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 //        new Thread(new Runnable() {
 //
 //            @Override
@@ -139,11 +151,11 @@ public class StartupListener implements ServletContextListener {
 //	wxUtils.initJsApiTicket();
 //	System.out.println("wx access token  init successful ========================");
                 
-        ScheduleUtil scheduleUtile = new ScheduleUtil();
-        scheduleUtile.init();
+//        ScheduleUtil scheduleUtile = new ScheduleUtil();
+//        scheduleUtile.init();
         System.out.println("schedule init successful ========================");
-        
-        MsgDelayQueue.getInstance().msgDistribution();
+//        TranscervierMsgHandler TranscervierMsgHandler = new TranscervierMsgHandler();
+//        MsgDelayQueue.getInstance().msgDistribution();
         
         System.out.println("MsgDelayQueue Message Distribution Successful ========================");
         
@@ -159,11 +171,11 @@ public class StartupListener implements ServletContextListener {
             Scheduler scheduler = sf.getScheduler();
             scheduler.shutdown();
 
-            NIOServer nserver = new NIOServer();
-            nserver.shutdown();
-
-            EContorlServer eserver = new EContorlServer();
-            eserver.shutdown();
+//            NIOServer nserver = new NIOServer();
+//            nserver.shutdown();
+//
+//            EContorlServer eserver = new EContorlServer();
+//            eserver.shutdown();
 
         } catch (Exception e) {
             e.printStackTrace();
