@@ -2,6 +2,7 @@ package com.os.framework.web.intef.zhyy;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.os.framework.db.dao.MainDao;
+import com.os.framework.web.handler.zhyy.RTUHandler;
 import com.os.framework.web.socket.NIOServer;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -145,19 +146,19 @@ public class ShebeiJiankongIntfc {
         List<Map<String,Object>> rtulist = dao.queryForList(sql, new Object[]{yzcid});
         List<Map<String,Object>> rtuszlist = null;
         for(Map m : rtulist){
-            if(NIOServer.rtumap.get(m.get("id")) != null){
+            if(RTUHandler.rtumap.get(m.get("id")) != null){
                 sql = "select * from zhyy_rtu_shezhi where zhyy_rtu_id = ? order by s_leibie,s_tongdao";
                 rtuszlist = dao.queryForList(sql, new Object[]{m.get("id")});
                 for(Map szm : rtuszlist){
                         if(szm.get("s_leibie").toString().equals("ai")){
-                            szm.put("val", NIOServer.rtumap.get(m.get("id").toString()).getRtuai().get( (Integer)szm.get("s_tongdao") - 1 ).get("va"));
+                            szm.put("val", RTUHandler.rtumap.get(m.get("id").toString()).getRtuai().get( (Integer)szm.get("s_tongdao") - 1 ).get("va"));
                         }else if(szm.get("s_leibie").toString().equals("di")){
-                            szm.put("val", NIOServer.rtumap.get(m.get("id").toString()).getRtudi().get( (Integer)szm.get("s_tongdao") - 1 ).get("va"));
+                            szm.put("val", RTUHandler.rtumap.get(m.get("id").toString()).getRtudi().get( (Integer)szm.get("s_tongdao") - 1 ).get("va"));
                         }else{
-                            szm.put("val", NIOServer.rtumap.get(m.get("id").toString()).getRtudo().get( (Integer)szm.get("s_tongdao") - 1 ).get("va"));
+                            szm.put("val", RTUHandler.rtumap.get(m.get("id").toString()).getRtudo().get( (Integer)szm.get("s_tongdao") - 1 ).get("va"));
                         }
                 }
-                jkdata.put(m.get("id").toString() + "_" + NIOServer.rtumap.get(m.get("id").toString()).getDatatime(), rtuszlist);
+                jkdata.put(m.get("id").toString() + "_" + RTUHandler.rtumap.get(m.get("id").toString()).getDatatime(), rtuszlist);
             }
         }
         return jkdata;
@@ -168,7 +169,7 @@ public class ShebeiJiankongIntfc {
     public String sendCode(String rtuid,String code) {
         NIOServer nserver = new NIOServer();
         try{
-        nserver.doWrite(rtuid, code);
+            RTUHandler.sendMsg(rtuid, code);
         }catch(Exception e){
             e.printStackTrace();
             return "-1";
@@ -179,8 +180,8 @@ public class ShebeiJiankongIntfc {
     @RequestMapping(value = {"/ifs/zhyy/shebeijiankong/getRemsg"}, method = {POST})
     @ResponseBody
     public String getRemsg() {
-        String msg = NIOServer.remsg;
-        NIOServer.remsg = "";
+        String msg = RTUHandler.remsg;
+        RTUHandler.remsg = "";
         return msg;
     }
 }

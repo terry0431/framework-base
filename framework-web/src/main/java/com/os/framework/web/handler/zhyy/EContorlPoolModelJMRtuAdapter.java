@@ -7,8 +7,8 @@ import java.util.Map;
 
 import com.os.framework.core.util.BinaryConversionUtil;
 
-import com.os.framework.mq.transceriver.queue.MsgDelayQueue;
-import com.os.framework.mq.transceriver.queue.MsgDelayed;
+import com.os.framework.web.queue.zhyy.MsgDelayQueue;
+import com.os.framework.web.queue.zhyy.MsgDelayed;
 import com.os.framework.core.util.crc.CRCUtil;
 import com.os.framework.web.socket.EContorlServer;
 
@@ -97,7 +97,7 @@ public class EContorlPoolModelJMRtuAdapter implements EContorlAdapterInterface {
 	public Map<String, Object> getState(String rtuid) {
 		//EContorlServer eserver = new EContorlServer();
 		List<Integer> sblist = new ArrayList();
-		sblist.add(8 - 2); // 第一个设备 前2个通路被总控制占用了 池塘开关设备顺序从3开始 
+		sblist.add(8 - 2); // 第一个设备 前2个通路被总控制占用了 池塘开关设备顺序从3开始
 		sblist.add(12); //第2个设备
 		String sb = "";
 		String td = "";

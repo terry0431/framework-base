@@ -7,8 +7,9 @@ package com.os.framework.quartz.jobs.bundle.zhyy;
 
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.web.cache.zhyy.SystemCache;
+import com.os.framework.web.handler.zhyy.RTUHandler;
 import com.os.framework.web.service.zhyy.DataBuilder;
-import com.os.framework.web.socket.NIOServer;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -25,7 +26,7 @@ import org.quartz.JobExecutionContext;
 public class ShuiCengKongzhi implements Job {
     SystemCache scache = new SystemCache();
     public static boolean initflag = true;
-    NIOServer nserver = new NIOServer();
+//    NIOServer nserver = new NIOServer();
     private final int sleeptime = 10000;
     private static List<Map<Integer, ArrayList<Map>>> setdata = null;
     private static Map<String,Map<Integer, ArrayList<Map>>> rtukv = new HashMap();
@@ -66,7 +67,7 @@ public class ShuiCengKongzhi implements Job {
 
     private void controKG(String rtuid, int donum, String flag) throws Exception {
         System.out.println("shuiceng " + new Date() + " : " + rtuid + " ================  : " + "#SETDO," + (donum ) + ","+flag+";");
-        nserver.doWrite(rtuid, "#SETDO," + (donum ) + "," + flag + ";");
+        RTUHandler.sendMsg(rtuid, "#SETDO," + (donum ) + "," + flag + ";");
     }
 
     public void initSCSet() {

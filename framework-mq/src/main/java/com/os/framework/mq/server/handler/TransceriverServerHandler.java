@@ -1,8 +1,11 @@
 package com.os.framework.mq.server.handler;
 
+import com.os.framework.mq.transceriver.queue.WebQueue;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @program: framework-base
@@ -10,9 +13,9 @@ import io.netty.util.ReferenceCountUtil;
  * @author: wangbo
  * @create: 2019-02-25 19:15
  **/
-public class TranscervierServerHandler extends ChannelInboundHandlerAdapter {
+public class TransceriverServerHandler extends ChannelInboundHandlerAdapter {
 
-
+    private static final Logger logger = LogManager.getLogger(TransceriverServerHandler.class);
     /**
       * @Description:客户端连接成功时调用次方法
       * @param ctx
@@ -23,14 +26,11 @@ public class TranscervierServerHandler extends ChannelInboundHandlerAdapter {
     **/
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception{
-        System.out.println("已连接到 transcervier 客户端 ");
-        TranscervierMsgHandler msgHandler = new TranscervierMsgHandler();
+//        System.out.println("[mp][tc][active]" + ctx.channel().remoteAddress());
+        logger.info("[mp][tc][active]" + ctx.channel().remoteAddress());
+        TransceriverMsgHandler msgHandler = new TransceriverMsgHandler();
         msgHandler.init(ctx);
-//        byte data[] = "server : 已连接".getBytes();
-//        //Netty 缓存类型 封装了NIO中的Buffer
-//        ByteBuf buf = Unpooled.buffer(data.length);
-//        buf.writeBytes(data);//将数据写入到缓存
-//        ctx.writeAndFlush(buf);//强制性发送所有的数据
+
     }
 
     /**
@@ -43,19 +43,13 @@ public class TranscervierServerHandler extends ChannelInboundHandlerAdapter {
       * @Time:19:39
     **/
     @Override
-    public void channelRead(ChannelHandlerContext ctx,Object msg)throws Exception{
+    public void channelRead(ChannelHandlerContext ctx,Object msg){
         try {
-            //TranscervierMsgHandler.sendMsg("[mq TranscervierServer]" + msg );
-
-            //将消息添加到队列
-            
-            System.out.println("[mq TranscervierServer] " + msg.toString().trim() );
-//            RtuEquipment equipment = (RtuEquipment)msg;
-////
-////            System.out.println("{服务器}" + equipment.getRtuid() );
-////            equipment.setDatatime("2010-11-11");
-//////            String remsg = "server : " + msg + HostInfo.SEPARATOR;
-////            ctx.writeAndFlush(equipment);
+            WebQueue.addMsg(msg.toString());
+            logger.debug("[mq][tc][read]" + msg.toString() );
+//            System.out.println("[mq][tc][read]" + msg.toString() );
+        }catch(Exception e){
+            e.printStackTrace();
         }finally{
             ReferenceCountUtil.release(msg);//释放缓存
         }
@@ -71,7 +65,7 @@ public class TranscervierServerHandler extends ChannelInboundHandlerAdapter {
     **/
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx,Throwable cause){
-        cause.printStackTrace();
-        ctx.close();
+//        cause.printStackTrace();
+//        ctx.close();
     }
 }

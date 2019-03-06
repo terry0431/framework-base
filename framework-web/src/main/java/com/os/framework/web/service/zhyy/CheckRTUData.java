@@ -3,7 +3,7 @@ package com.os.framework.web.service.zhyy;
 import com.os.framework.core.util.DateUtil;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
-import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
+import com.os.framework.vo.transceriver.RtuEquipment;
 import com.os.framework.web.cache.zhyy.SystemCache;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -41,7 +41,7 @@ public class CheckRTUData {
 //        }
 //    }
     
-    public void check(RTUMod rtu) throws Exception{
+    public void check(RtuEquipment rtu) throws Exception{
         MainDao dao = new MainDao();
 //        List<Map<String, Object>> list = new ArrayList<>();
         Map<String, Object> warning;

@@ -1,4 +1,4 @@
-package com.os.framework.mq.transceriver.queue;
+package com.os.framework.web.queue.zhyy;
 
 import java.util.Map;
 import java.util.concurrent.Delayed;

@@ -7,18 +7,16 @@ import java.util.Map;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import com.os.framework.db.dao.MainDao;
-import com.os.framework.db.mapping.AppMapping;
 import com.os.framework.db.mapping.TableInfoMapping;
 import com.os.framework.quartz.ScheduleUtil;
 import com.os.framework.quartz.jobs.bundle.zhyy.ShuiCengKongzhi;
 import com.os.framework.quartz.jobs.bundle.zhyy.YangshuijiKongzhi;
 import com.os.framework.core.config.CommonBean;
 import com.os.framework.web.cache.zhyy.SystemCache;
-import com.os.framework.web.service.zhyy.CheckRTUData;
 import com.os.framework.web.service.zhyy.Message;
 import com.os.framework.web.socket.EContorlServer;
-import com.os.framework.web.socket.NIOServer;
 import com.os.framework.web.subscribe.SubscribeClient;
+import org.apache.logging.log4j.LogManager;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
@@ -46,8 +44,8 @@ public class StartupListener implements ServletContextListener {
         PathBean.webInit();
         System.out.println("pathbean init successful=======================");
 
-        AppMapping.initAppMapping();
-        System.out.println("appMapping init successful ====================");
+//        AppMapping.initAppMapping();
+//        System.out.println("appMapping init successful ====================");
         TableInfoMapping.initTableInfoMapping();
         System.out.println("MainMapping init successful ===================");
 
@@ -66,7 +64,7 @@ public class StartupListener implements ServletContextListener {
         syscache.init_baojingsz();
         System.out.println("SystemCache init successful ====================");
         
-        CheckRTUData checkRTUData = new CheckRTUData();
+//        CheckRTUData checkRTUData = new CheckRTUData();
         
         System.out.println("CheckRTUData init successful ====================");
         
@@ -86,79 +84,40 @@ public class StartupListener implements ServletContextListener {
                 }
             }
         }).start();
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                try {
-//                    NIOServer nserver = new NIOServer();
-//                    nserver.start();
-//                    System.out.println("nserver.star successful ====================");
-//                } catch (Exception e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+
         
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                try {
-//                    EContorlServer eserver = new EContorlServer();
-//                    eserver.start();
-//                    System.out.println("eserver.star successful ====================");
-//                } catch (Exception e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-//        new Thread(new Runnable() {
-//
-//            @Override
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                try {
-//                    NIOServerQixiang nserverqx = new NIOServerQixiang();
-//                    nserverqx.start();
-//                } catch (Exception e) {
-//                    // TODO Auto-generated catch block
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                try {
+                    EContorlServer eserver = new EContorlServer();
+                    eserver.start();
+                    System.out.println("eserver.star successful ====================");
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
         System.out.println("socket init successful ========================");
 
-//		System.out.println("rmi init successful ========================");
-        
 
-        //KTBean ktbean = new KTBean();
-        //ktbean.loadKT();
-        //System.out.println("exam kaoti init successful ========================");
         ShuiCengKongzhi sckongzhi = new ShuiCengKongzhi();
         sckongzhi.initSCSet();
         System.out.println("shuicengkongzhi init successful ========================");
-        
+
         YangshuijiKongzhi ysjkongzhi = new YangshuijiKongzhi();
         ysjkongzhi.initYSJSet();
         System.out.println("yangshuijikongzhi init successful ========================");
-        
-        
-//        WeiXinUtils wxUtils = new WeiXinUtils();
-//	wxUtils.initAccessToken();
-//	wxUtils.initJsApiTicket();
-//	System.out.println("wx access token  init successful ========================");
-                
-//        ScheduleUtil scheduleUtile = new ScheduleUtil();
-//        scheduleUtile.init();
+//
+
+        ScheduleUtil scheduleUtile = new ScheduleUtil();
+        scheduleUtile.init();
         System.out.println("schedule init successful ========================");
-//        TranscervierMsgHandler TranscervierMsgHandler = new TranscervierMsgHandler();
-//        MsgDelayQueue.getInstance().msgDistribution();
-        
-        System.out.println("MsgDelayQueue Message Distribution Successful ========================");
-        
+
+
         System.out.println("--------------------------------------");
         System.out.println("------------framework init------------");
         System.out.println("--------------------------------------");
@@ -168,14 +127,13 @@ public class StartupListener implements ServletContextListener {
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
         SchedulerFactory sf = new StdSchedulerFactory();
         try {
+
             Scheduler scheduler = sf.getScheduler();
             scheduler.shutdown();
 
-//            NIOServer nserver = new NIOServer();
-//            nserver.shutdown();
-//
-//            EContorlServer eserver = new EContorlServer();
-//            eserver.shutdown();
+            EContorlServer eserver = new EContorlServer();
+            eserver.shutdown();
+            LogManager.shutdown();
 
         } catch (Exception e) {
             e.printStackTrace();

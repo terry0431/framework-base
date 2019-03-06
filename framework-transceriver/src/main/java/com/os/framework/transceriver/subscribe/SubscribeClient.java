@@ -10,8 +10,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
@@ -32,8 +30,6 @@ public class SubscribeClient {
         return subscribeClient;
     }
     public void run() throws Exception {
-        // 1、如果现在客户端不同，那么也可以不使用多线程模式来处理;
-        // 在Netty中考虑到代码的统一性，也允许你在客户端设置线程池
         EventLoopGroup group = new NioEventLoopGroup(); // 创建一个线程池
         try {
             Bootstrap client = new Bootstrap(); // 创建客户端处理程序
@@ -42,10 +38,6 @@ public class SubscribeClient {
                     .handler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
-//                            socketChannel.pipeline().addLast(new LengthFieldBasedFrameDecoder(65536, 0, 4, 0, 4));
-//                            socketChannel.pipeline().addLast(new JSONDecoder());
-//                            socketChannel.pipeline().addLast(new LengthFieldPrepender(4));
-//                            socketChannel.pipeline().addLast(new JSONEncoder());
                             socketChannel.pipeline().addLast(new StringEncoder(CharsetUtil.UTF_8)); //ByteBuf转String处理器
                             socketChannel.pipeline().addLast(new StringDecoder(CharsetUtil.UTF_8)); //String转ByteBuf处理器
                             socketChannel.pipeline().addLast(new SubscribeHandler()); // 追加了处理器

@@ -1,8 +1,12 @@
 package com.os.framework.mq.server.handler;
 
+import com.os.framework.core.config.HostInfo;
+import com.os.framework.mq.transceriver.queue.RTUQueue;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.util.ReferenceCountUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @program: framework-base
@@ -12,7 +16,7 @@ import io.netty.util.ReferenceCountUtil;
  **/
 public class WebServerHandler extends ChannelInboundHandlerAdapter {
 
-
+    private static final Logger logger = LogManager.getLogger(WebServerHandler.class);
     /**
       * @Description:客户端连接成功时调用次方法
       * @param ctx
@@ -23,40 +27,40 @@ public class WebServerHandler extends ChannelInboundHandlerAdapter {
     **/
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception{
-        System.out.println("已连接 ...");
+        logger.debug("[mq][web][active]" + ctx.channel().remoteAddress());
+//        System.out.println("[mq][web][active]" + ctx.channel().remoteAddress());
         WebMsgHandler msgHandler = new WebMsgHandler();
         msgHandler.init(ctx);
-//        byte data[] = "server : 已连接".getBytes();
-//        //Netty 缓存类型 封装了NIO中的Buffer
-//        ByteBuf buf = Unpooled.buffer(data.length);
-//        buf.writeBytes(data);//将数据写入到缓存
-//        ctx.writeAndFlush(buf);//强制性发送所有的数据
     }
 
     /**
       * @Description:客户端发送数据时调用此方法
       * @param ctx
-      * @param msg
+      * @param obj
       * @return:void
       * @Author:wangbo
       * @Date:2019-02-25
       * @Time:19:39
     **/
     @Override
-    public void channelRead(ChannelHandlerContext ctx,Object msg)throws Exception{
+    public void channelRead(ChannelHandlerContext ctx,Object obj){
         try {
+            //检查指令是否正确
+            if(obj == null || obj.toString().split(HostInfo.SEPARATOR).length != 2){
+//                System.out.println("[mq][web][read][errmsg]" + obj);
+                logger.debug("[mq][web][read][errmsg]{}" ,obj);
+                return;
+            }
+            String rtuid = obj.toString().split(HostInfo.SEPARATOR)[0];
+            String msg = obj.toString().split(HostInfo.SEPARATOR)[1];
+            System.out.println("[mq][web][read]" + rtuid + " msg : " + msg.trim() );
+            //建立 队列 向队列中插入消息 队列将消息转发给 收发器处理
+            RTUQueue.addMsg(rtuid,msg);
 
-            System.out.println("********* " + msg.toString().trim() );
-            //将消息存入队列
-
-//            RtuEquipment equipment = (RtuEquipment)msg;
-////
-////            System.out.println("{服务器}" + equipment.getRtuid() );
-////            equipment.setDatatime("2010-11-11");
-//////            String remsg = "server : " + msg + HostInfo.SEPARATOR;
-////            ctx.writeAndFlush(equipment);
+        }catch(Exception e ){
+            e.printStackTrace();
         }finally{
-            ReferenceCountUtil.release(msg);//释放缓存
+            ReferenceCountUtil.release(obj);//释放缓存
         }
     }
     /**
@@ -70,7 +74,7 @@ public class WebServerHandler extends ChannelInboundHandlerAdapter {
     **/
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx,Throwable cause){
-        cause.printStackTrace();
-        ctx.close();
+//        cause.printStackTrace();
+//        ctx.close();
     }
 }

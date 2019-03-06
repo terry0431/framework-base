@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.os.framework.core.util.DateUtil;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
-import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
+import com.os.framework.vo.transceriver.RtuEquipment;
 import com.os.framework.web.cache.zhyy.SystemCache;
+import com.os.framework.web.handler.zhyy.RTUHandler;
 import com.os.framework.web.socket.NIOServer;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -29,7 +30,7 @@ public class DataBuilder {
 //        return rtushezhi.get(rtuid);
 //    }
     SystemCache sysCache = new SystemCache();
-    public void saveRtuData(RTUMod rtumod) {
+    public void saveRtuData(RtuEquipment rtumod) {
         ObjectMapper mapper = new ObjectMapper();
         MainDao dao = new MainDao();
         Calendar calendar = Calendar.getInstance();
@@ -78,7 +79,7 @@ public class DataBuilder {
         Calendar calendar = Calendar.getInstance();
         MainDao dao = new MainDao();
         SystemCache syscache = new SystemCache();
-        List<RTUMod> RTUModList = null;
+        List<RtuEquipment> RTUModList = null;
         Map<String, Map<String, Object>> szdatamap = new HashMap(); //key 养殖区+水层 value 对象数据
         Map<String, Integer> szdatanum = new HashMap();// key 养殖区+水层 value 计总数 用于最后算小时平均值
         Integer[] nums;
@@ -101,11 +102,11 @@ public class DataBuilder {
                     return !mm.get("s_obj").equals("zhyy_shuizhishuju");
                 }
             });
-            RTUModList = NIOServer.hourDateMap.get(rtuid);
+            RTUModList = RTUHandler.hourDateMap.get(rtuid);
             double d1 = 0d;
             double d2 = 0d;
             int num;
-            for (RTUMod rtumod : RTUModList) {
+            for (RtuEquipment rtumod : RTUModList) {
 
                 calendar.setTime(DateUtil.convertStringToDatetime(rtumod.getDatatime()));
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
@@ -265,7 +266,7 @@ public class DataBuilder {
             ex.printStackTrace();
         }
     }
-    public void builddata_10fz(RTUMod rtumod) {
+    public void builddata_10fz(RtuEquipment rtumod) {
         ObjectMapper mapper = new ObjectMapper();
         MainDao dao = new MainDao();
         Calendar calendar = Calendar.getInstance();

@@ -12,6 +12,8 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * @program: framework-base
@@ -20,11 +22,13 @@ import io.netty.util.CharsetUtil;
  * @create: 2019-03-03 17:12
  **/
 public class WebConnectionServer {
-    //主线程池 接收客户端连接
-    EventLoopGroup bossGroup = null;
-    //工作线程池 处理客户端连接
-    EventLoopGroup workerGroup = null;
+    private static final Logger logger = LogManager.getLogger(WebConnectionServer.class);
 
+    //主线程池 接收客户端连接
+    static EventLoopGroup bossGroup = null;
+    //工作线程池 处理客户端连接
+    static EventLoopGroup workerGroup = null;
+    static ChannelFuture future = null;
     private WebConnectionServer(){}
 
     private static WebConnectionServer sserver = null;
@@ -34,13 +38,13 @@ public class WebConnectionServer {
         }
         return sserver;
     }
-    public void run()throws Exception {
+    public void run() {
 
         try {
             //主线程池 接收客户端连接
-            bossGroup = new NioEventLoopGroup();
+            bossGroup = new NioEventLoopGroup(1);
             //工作线程池 处理客户端连接
-            workerGroup = new NioEventLoopGroup();
+            workerGroup = new NioEventLoopGroup(1);
             //服务端的程序类进行NIO启动 可以设置Channel
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class);//设置
@@ -52,29 +56,33 @@ public class WebConnectionServer {
                     socketChannel.pipeline().addLast(new WebServerHandler()); //连接、读取处理器
                 }
             });
-            //TCP相关协议配置
-//            serverBootstrap.option(ChannelOption.SO_BACKLOG, 128);//设置连接块的大小
-//            serverBootstrap.childOption(ChannelOption.SO_KEEPALIVE, true);//使用长连接
             //描述异步回调的处理操作
-            ChannelFuture future = serverBootstrap.bind(HostInfo.WEB_POST).sync(); //同步等待
-            System.out.println("服务器已启动 监听端口为:" + HostInfo.WEB_POST);
+            future = serverBootstrap.bind(HostInfo.WEB_POST).sync(); //同步等待
+//            System.out.println("[mq][WebConServer][start]port:" + HostInfo.WEB_POST);
+            logger.info("[mq][WebConServer][start]port:" + HostInfo.WEB_POST);
             future.channel().closeFuture().sync();//等到socket被关闭
+        }catch(Exception e){
+            e.printStackTrace();
         }finally {
             //关闭连接池
+            logger.info("===============close webserver=============");
+//            System.out.println("===============close webserver=============");
             bossGroup.shutdownGracefully();
             workerGroup.shutdownGracefully();
         }
     }
 
     public void shutdown(){
+
         if(bossGroup != null){
+            logger.info("[mq][web][boss][shutdown] ..." );
             bossGroup.shutdownGracefully();
         }
         if(workerGroup != null){
+            logger.info("[mq][web][work][shutdown] ..." );
             workerGroup.shutdownGracefully();
         }
     }
-
     public static void main(String[] args)throws Exception {
         WebConnectionServer.getInstance().run();
     }

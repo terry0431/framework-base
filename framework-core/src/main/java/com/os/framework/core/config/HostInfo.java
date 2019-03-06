@@ -16,5 +16,6 @@ public class HostInfo {
     public static final Integer TRANSCERVIER_POST = 10301;
 
     public static final String HOST_NAME = "localhost";
-    //public static final String SEPARATOR = "$|";
+    public static final String SEPARATOR = "@";
+
 }

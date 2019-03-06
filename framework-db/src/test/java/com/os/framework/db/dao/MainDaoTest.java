@@ -53,12 +53,13 @@ public class MainDaoTest {
 			TableInfoMapping.initTableInfoMapping();
 			MainDao dao = new MainDao();
 			List<Map<String, Object>> list = dao.queryForList("select * from zhyy_shebeijiankong", null);
-			for (Map<String, Object> m : list) {
-				for (String key : m.keySet()) {
-					System.out.println("Key:" + key + " || value:" + m.get(key));
-				}
-				System.out.println("======================================");
-			}
+			System.out.println("list size :" + list.size());
+//			for (Map<String, Object> m : list) {
+//				for (String key : m.keySet()) {
+//					System.out.println("Key:" + key + " || value:" + m.get(key));
+//				}
+//				System.out.println("======================================");
+//			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

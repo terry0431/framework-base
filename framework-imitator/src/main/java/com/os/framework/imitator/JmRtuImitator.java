@@ -65,7 +65,7 @@ public class JmRtuImitator {
                             socketChannel.pipeline().addLast(new ImitatorHandler());
                         }
                     });
-            ChannelFuture future = client.connect(HostInfo.HOST_NAME,HostInfo.POST).sync();
+            ChannelFuture future = client.connect(HostInfo.HOST_NAME,HostInfo.TRANSCERVIER_POST).sync();
             future.addListener(new GenericFutureListener() {
                 @Override
                 public void operationComplete(Future future) throws Exception {

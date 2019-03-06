@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import com.os.framework.web.handler.zhyy.RTUHandler;
 import org.springframework.stereotype.Controller;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
@@ -71,11 +73,11 @@ public class RtuIntfc {
         Date sd = null;
         Date cd = null;
         for (Map m : list) {
-            if (NIOServer.rtumap.get(m.get("mainid")) != null) {
-                m.put("servertime", DateUtil.convertDatetimeToString(NIOServer.rtumap.get(m.get("mainid")).getServertime()));
-                m.put("datetime", NIOServer.rtumap.get(m.get("mainid")).getDatatime());
-                sd = NIOServer.rtumap.get(m.get("mainid")).getServertime();
-                cd = DateUtil.convertStringToDatetime(NIOServer.rtumap.get(m.get("mainid")).getDatatime());
+            if (RTUHandler.rtumap.get(m.get("mainid")) != null) {
+                m.put("servertime", DateUtil.convertDatetimeToString(RTUHandler.rtumap.get(m.get("mainid")).getServertime()));
+                m.put("datetime", RTUHandler.rtumap.get(m.get("mainid")).getDatatime());
+                sd = RTUHandler.rtumap.get(m.get("mainid")).getServertime();
+                cd = DateUtil.convertStringToDatetime(RTUHandler.rtumap.get(m.get("mainid")).getDatatime());
                 m.put("sjc", ((sd.getTime() - cd.getTime()) / 1000 ) + "秒");
             } else {
                 m.put("servertime", "");
@@ -174,7 +176,7 @@ public class RtuIntfc {
         try{
             Date d = new Date();
             String code = "#SETTIME," + DateUtil.convertDatetimeToString(d) + ";";
-            nserver.doWrite(rtuid, code);
+            RTUHandler.sendMsg(rtuid, code);
         }catch(Exception e){
             e.printStackTrace();
             return "-1";

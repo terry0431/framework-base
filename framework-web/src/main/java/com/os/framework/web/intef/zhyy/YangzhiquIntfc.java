@@ -4,12 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
+
+import com.os.framework.vo.transceriver.RtuEquipment;
+import com.os.framework.web.handler.zhyy.RTUHandler;
 import org.springframework.stereotype.Controller;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.db.util.PKBean;
-import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
 import com.os.framework.web.service.zhyy.CheckRTUData;
-import com.os.framework.web.socket.NIOServer;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -239,14 +241,14 @@ public class YangzhiquIntfc {
                 keylist.add(yzqmap.get("id")+ "_" + yzqmap.get("y_bianhao"));
                 sql = "select * from zhyy_rtu_shezhi where zhyy_yangzhiqu_id = ? order by s_tongdao";
                 List<Map<String, Object>> szlist = mainDao.queryForList(sql, new Object[]{yzqmap.get("id")});
-                RTUMod rtumod ;
+                RtuEquipment rtumod ;
                 Map msgmap = null; 
                 Map<String,Map<String,Object> > yzqbjmap = CheckRTUData.bjlog.get(yzqmap.get("id").toString());
                 
                 szobj = new HashMap();
                 for(Map<String,Object> m : szlist){
                     
-                    rtumod = NIOServer.rtumap.get(m.get("zhyy_rtu_id"));
+                    rtumod = RTUHandler.rtumap.get(m.get("zhyy_rtu_id"));
                     if(rtumod == null){
                         continue;
                     }
@@ -292,11 +294,11 @@ public class YangzhiquIntfc {
             
             String sql = "select * from zhyy_rtu_shezhi where zhyy_yangzhiqu_id = ? order by s_tongdao";
             List<Map<String, Object>> szlist = mainDao.queryForList(sql, new Object[]{yzqid});
-            RTUMod rtumod ;
+            RtuEquipment rtumod ;
             Map msgmap = null; 
             Map<String,Map<String,Object> > yzqbjmap = CheckRTUData.bjlog.get(yzqid);
             for(Map<String,Object> m : szlist){
-                rtumod = NIOServer.rtumap.get(m.get("zhyy_rtu_id"));
+                rtumod = RTUHandler.rtumap.get(m.get("zhyy_rtu_id"));
                 if(rtumod == null){
                     continue;
                 }

@@ -5,8 +5,8 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import com.os.framework.mq.transceriver.queue.MsgDelayQueue;
-import com.os.framework.mq.transceriver.queue.MsgDelayed;
+import com.os.framework.web.queue.zhyy.MsgDelayQueue;
+import com.os.framework.web.queue.zhyy.MsgDelayed;
 import com.os.framework.vo.zhyy.Job;
 
 
@@ -33,7 +33,7 @@ public class WaterConveyanceHandler {
 				Job job = runmap.get(rtuid);
 				job.setRuntime(System.currentTimeMillis() );
 				count = job.getJobinfo().length ;
-				
+
 				try {
 					//先打开饵料池开关
 					Thread maint = new Thread(new Runnable() {
@@ -52,13 +52,13 @@ public class WaterConveyanceHandler {
 					maint.join();
 					//饵料池任务执行完毕 开始执行其他任务
 //					int concurrentNum = job.getConcurrentNum();
-					
+
 //					Integer[] states = new Integer[concurrentNum];
 //					Integer[] lasttime = new Integer[concurrentNum];
 					//int i = 0;
-					CountDownLatch threadSignal = new CountDownLatch(job.getJobinfo().length);//初始化countDown  
+					CountDownLatch threadSignal = new CountDownLatch(job.getJobinfo().length);//初始化countDown
 					MsgDelayed delayed = null;
-					long delayedtime = 0; 
+					long delayedtime = 0;
 					for(int i = 0;i < job.getJobinfo().length ;i ++) {
 						System.out.println("linenum:"+ linenum);
 						if(linenum < job.getConcurrentNum()) {
@@ -69,20 +69,20 @@ public class WaterConveyanceHandler {
 									int thiscount = job.getJobinfo().length - (count-- );
 									System.out.println("任务"+ thiscount +"开始");
 									try {
-										
+
 										// TODO Auto-generated method stub
 										//打开开关
 										contorlAdapter.switchControl(rtuid,
 												job.getEquipmentNum()[thiscount],
-												job.getLineNum()[thiscount], 
+												job.getLineNum()[thiscount],
 												1,
 												0);
 										int time = job.getJobinfo()[thiscount];
-										
+
 										//关闭开关
 										contorlAdapter.switchControl(rtuid,
 												job.getEquipmentNum()[thiscount],
-												job.getLineNum()[thiscount], 
+												job.getLineNum()[thiscount],
 												1,
 												time * 1000);
 										Thread.sleep(time * 1000);
@@ -100,10 +100,10 @@ public class WaterConveyanceHandler {
 //										//关闭开关
 //										contorlAdapter.switchControl(rtuid,
 //												job.getEquipmentNum()[thiscount],
-//												job.getLineNum()[thiscount], 
+//												job.getLineNum()[thiscount],
 //												0);
 										System.out.println("任务"+ thiscount +"结束==============");
-										
+
 									} catch (Exception e) {
 										// TODO Auto-generated catch block
 										e.printStackTrace();
@@ -117,7 +117,7 @@ public class WaterConveyanceHandler {
 //										runmap.get(rtuid).setRun_state(false);
 //									}
 								}
-							},"mythread_job").start(); 
+							},"mythread_job").start();
 						}else {
 							System.out.println("等待开启下个任务==========");
 							delayed = MsgDelayQueue.getInstance().waitDelayTime(rtuid);
@@ -168,8 +168,8 @@ public class WaterConveyanceHandler {
 		},"mythread_runjob").start();
 		return "1";
 	}
-	
-	
+
+
 	/**
 	 * 设置任务
 	 * @param job	任务对象

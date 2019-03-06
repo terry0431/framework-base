@@ -38,5 +38,8 @@ public class DbPoolConnection {
 	public DruidPooledConnection getConnection() throws SQLException {
 		return dds.getConnection();
 	}
-	
+
+	public void shutdown(){
+		dds.close();
+	}
 }

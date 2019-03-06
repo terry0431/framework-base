@@ -2,6 +2,9 @@ package com.os.framework.web.intef.zhyy;
 
 import java.util.List;
 import java.util.Map;
+
+import com.os.framework.vo.transceriver.RtuEquipment;
+import com.os.framework.web.handler.zhyy.RTUHandler;
 import org.springframework.stereotype.Controller;
 import com.os.framework.db.dao.MainDao;
 import com.os.framework.quartz.jobs.bundle.zhyy.RTUMod;
@@ -157,10 +160,10 @@ public class GlobalIntfc {
      */
     @RequestMapping(value = {"/ifs/zhyy/getRTUModById"}, method = {POST})
     @ResponseBody
-    public RTUMod getRTUModById(String rtuid) {
-        RTUMod rtumod ;
-        if(NIOServer.rtumap.get(rtuid) != null){
-            rtumod = NIOServer.rtumap.get(rtuid);
+    public RtuEquipment getRTUModById(String rtuid) {
+        RtuEquipment rtumod ;
+        if(RTUHandler.rtumap.get(rtuid) != null){
+            rtumod = RTUHandler.rtumap.get(rtuid);
             return rtumod;
         }else{
             return null;

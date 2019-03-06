@@ -51,7 +51,7 @@ public class EContorlServer {
     private boolean server_flag = true;
 
     // 队列    数据队列  指令反馈队列  心跳队列
-    ServerSocketChannel ssc = null;
+    private static ServerSocketChannel ssc = null;
 
     public void start() {
         ServerSocketChannel ssc = null;

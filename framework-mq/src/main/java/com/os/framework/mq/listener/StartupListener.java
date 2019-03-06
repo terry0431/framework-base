@@ -2,6 +2,7 @@ package com.os.framework.mq.listener;
 
 import com.os.framework.mq.server.TransceriverConnectionServer;
 import com.os.framework.mq.server.WebConnectionServer;
+import com.os.framework.mq.transceriver.queue.WebQueue;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -23,9 +24,10 @@ public class StartupListener implements ServletContextListener {
             public void run() {
                 // TODO Auto-generated method stub
                 try {
+                    System.out.println("tcServer.star successful ====================");
                     TransceriverConnectionServer.getInstance().run();
+                    System.out.println("tcServer.shutdown successful ====================");
 
-                    System.out.println("rtuServer.star successful ====================");
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -37,18 +39,21 @@ public class StartupListener implements ServletContextListener {
             public void run() {
                 // TODO Auto-generated method stub
                 try {
+                    System.out.println("web.star successful ====================");
                     WebConnectionServer.getInstance().run();
+                    System.out.println("web.shutdown successful ====================");
 
-                    System.out.println("rtuServer.star successful ====================");
+
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
         }).start();
-        System.out.println("--------------------------------------------------");
-        System.out.println("------------framework-transceiver init------------");
-        System.out.println("--------------------------------------------------");
+        WebQueue.msgDistribution();
+        System.out.println("-----------------------------------------");
+        System.out.println("------------framework-mq init------------");
+        System.out.println("-----------------------------------------");
     }
 
     @Override
@@ -59,8 +64,8 @@ public class StartupListener implements ServletContextListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("----------------------------------------------");
-        System.out.println("--------gframework-transceiver destroy--------");
-        System.out.println("----------------------------------------------");
+        System.out.println("-------------------------------------");
+        System.out.println("--------gframework-mq destroy--------");
+        System.out.println("-------------------------------------");
     }
 }

@@ -1,8 +1,14 @@
-package com.os.framework.mq.transceriver.queue;
+package com.os.framework.web.queue.zhyy;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.DelayQueue;
+import java.util.concurrent.Delayed;
+import java.util.concurrent.TimeUnit;
+
+import com.os.framework.web.handler.zhyy.EContorlAdapterInterface;
+import com.os.framework.web.handler.zhyy.EContorlPoolModelJMRtuAdapter;
 
 public class MsgDelayQueue {
 	
@@ -50,28 +56,28 @@ public class MsgDelayQueue {
 	/**
 	 * 	消息分发
 	 */
-//	public void msgDistribution() {
-//		EContorlAdapterInterface contorlPoolModelJMRtuAdapter = new EContorlPoolModelJMRtuAdapter();
-//		for(String key : jmrtuqueue.keySet()) {
-//			new Thread(new Runnable() {
-//				@Override
-//				public void run() {
-//					// TODO Auto-generated method stub
-//					Map<String,String> m = null;
-//					for(;;) {
-//						try {
-//							if(jmrtuqueue.get(key) != null ) {
-//								m = jmrtuqueue.get(key).take().getMsg();
-//								contorlPoolModelJMRtuAdapter.sendMsg(key, m.get(key));
-//								Thread.sleep(300);
-//							}
-//						} catch (InterruptedException e) {
-//							// TODO Auto-generated catch block
-//							e.printStackTrace();
-//						}
-//					}
-//				}
-//			}).start();
-//		}
-//	}
+	public void msgDistribution() {
+		EContorlAdapterInterface contorlPoolModelJMRtuAdapter = new EContorlPoolModelJMRtuAdapter();
+		for(String key : jmrtuqueue.keySet()) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Map<String,String> m = null;
+					for(;;) {
+						try {
+							if(jmrtuqueue.get(key) != null ) {
+								m = jmrtuqueue.get(key).take().getMsg();
+								contorlPoolModelJMRtuAdapter.sendMsg(key, m.get(key));
+								Thread.sleep(300);
+							}
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}).start();
+		}
+	}
 }

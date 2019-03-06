@@ -1,11 +1,11 @@
-package com.os.framework.mq.transceriver.queue;
+package com.os.framework.web.queue.zhyy;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-//import com.os.framework.web.handler.zhyy.EContorlAdapterInterface;
-//import com.os.framework.web.handler.zhyy.EContorlPoolModelJMRtuAdapter;
+import com.os.framework.web.handler.zhyy.EContorlAdapterInterface;
+import com.os.framework.web.handler.zhyy.EContorlPoolModelJMRtuAdapter;
 
 public class MsgQueue {
 	
@@ -50,22 +50,22 @@ public class MsgQueue {
 	/**
 	 * 消息分发
 	 */
-//	public void msgDistribution() {
-//		EContorlAdapterInterface contorlPoolModelJMRtuAdapter = new EContorlPoolModelJMRtuAdapter();
-//		for(String key : jmrtuqueue.keySet()) {
-//			new Thread(new Runnable() {
-//				@Override
-//				public void run() {
-//					// TODO Auto-generated method stub
-//					Map<String,String> m = null;
-//					for(;;) {
-//						if(jmrtuqueue.get(key) != null && !jmrtuqueue.get(key).isEmpty()) {
-//							m = jmrtuqueue.get(key).poll();
-//							contorlPoolModelJMRtuAdapter.sendMsg(key, m.get(key));
-//						}
-//					}
-//				}
-//			}).start();
-//		}
-//	}
+	public void msgDistribution() {
+		EContorlAdapterInterface contorlPoolModelJMRtuAdapter = new EContorlPoolModelJMRtuAdapter();
+		for(String key : jmrtuqueue.keySet()) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					// TODO Auto-generated method stub
+					Map<String,String> m = null;
+					for(;;) {
+						if(jmrtuqueue.get(key) != null && !jmrtuqueue.get(key).isEmpty()) {
+							m = jmrtuqueue.get(key).poll();
+							contorlPoolModelJMRtuAdapter.sendMsg(key, m.get(key));
+						}
+					}
+				}
+			}).start();
+		}
+	}
 }
