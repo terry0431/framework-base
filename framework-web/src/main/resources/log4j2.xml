@@ -6,7 +6,7 @@
     <Properties>
         <Property name="APP_NAME">my_log4j2_test_proj</Property>
         <!--设置日志文件存储路径为tomcat/logs/${APP_NAME}-->
-        <Property name="LOG_FILE_PATH">/logs</Property>
+        <Property name="LOG_FILE_PATH">${web:rootDir}/logs</Property>
         <!--设置日志输出格式-->
         <Property name="PATTERN_FORMAT">%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %class{36} %L %M - %msg%xEx%n</Property>
     </Properties>
@@ -16,7 +16,27 @@
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN_FORMAT}"/>
         </Console>
+        <!--输出info日志到文件，filePattern旧日志另存文件名-->
+        <RollingFile name="RollingDebugFile" fileName="${LOG_FILE_PATH}/debug.log"
+                     filePattern="${LOG_FILE_PATH}/$${date:yyyyMM}/info-%d{yyyyMMdd}-%i.log">
+            <!--控制台只输出level及以上级别的信息（onMatch），其他的直接拒绝（onMismatch）-->
+            <Filters>
+                <ThresholdFilter level="info" onMatch="DENY" onMismatch="NEUTRAL"/>
+                <ThresholdFilter level="debug" onMatch="ACCEPT" onMismatch="DENY"/>
+            </Filters>
 
+            <PatternLayout>
+                <pattern>${PATTERN_FORMAT}</pattern>
+            </PatternLayout>
+
+            <Policies>
+                <!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
+                <!--当系统重启/日期更新/超过100M将会覆盖文件-->
+                <OnStartupTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="100 MB"/>
+                <TimeBasedTriggeringPolicy/>
+            </Policies>
+        </RollingFile>
         <!--输出info日志到文件，filePattern旧日志另存文件名-->
         <RollingFile name="RollingInfoFile" fileName="${LOG_FILE_PATH}/info.log"
                      filePattern="${LOG_FILE_PATH}/$${date:yyyyMM}/info-%d{yyyyMMdd}-%i.log">
@@ -81,6 +101,7 @@
         <!-- LOG everything at INFO level -->
         <Root level="ALL">
             <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingDebugFile"/>
             <AppenderRef ref="RollingInfoFile"/>
             <AppenderRef ref="RollingWarnFile"/>
             <AppenderRef ref="RollingErrorFile"/>

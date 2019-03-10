@@ -8,7 +8,7 @@ package com.os.framework.core.config;
  **/
 public class HostInfo {
     //接收设备消息端口
-    public static final Integer RTU_POST = 10121;
+    public static final Integer RTU_POST = 1021;
     public static final Integer JMRTU_POST = 10021;
     //web通信端口
     public static final Integer WEB_POST = 10201;

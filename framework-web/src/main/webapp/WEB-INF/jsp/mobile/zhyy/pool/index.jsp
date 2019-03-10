@@ -752,11 +752,14 @@
         <a href="#" data-rel="close"
            class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-b ">返回</a>
     </div>
-    <div data-role="header">
-        <h1>输水控制</h1>
-    </div>
+
     <div data-role="main" class="ui-content">
         <div>
+            <div data-role="navbar">
+                <ul>
+                    <li><a data-ajax="false" href="<%=path%>/con/mobile/zhyy/index" class="ui-btn-active">智慧渔业</a></li>
+                </ul>
+            </div><!-- /navbar -->
             <div id="consolemsg" style="color: #3C6E31;"></div>
             <div class="ui-field-contain">
                 <label for="concurrentNum">最大并发数</label> <input type="text"

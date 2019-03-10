@@ -94,6 +94,7 @@
             {name:'checkbox', value:iconImg.checkBoxIcon, width:"10%",align:"center" ,event:"click", eventFunc:selclick},
             {name:'view', value:'查看', width:"10%",className:"",align:"center"},
             {name:'edit', value:'编辑', width:"10%",className:"",align:"center"},
+            {name:'setmodule', value:'设置模块', width:"10%",className:"",align:"center"},
             {name:'YMingcheng', value:'养殖场名称', width:"10%",align:"center"},	
             {name:'YCode', value:'养殖场编号', width:"10%",align:"center"},	
             {name:'YLianxiren', value:'联系人', width:"10%",align:"center"},	
@@ -137,6 +138,7 @@
 //                    YSheng:{value:list[i].y_sheng, align:"center"},
 //                    YShi:{value:list[i].y_shi, align:"center"},
 //                    YQuxian:{value:list[i].y_quxian, align:"center"},
+                    setmodule:{value:iconImg.editIcon, event:"click", eventFunc:setModule, customArg:{}, align:"center"},
                     edit:{value:iconImg.editIcon, event:"click", eventFunc:editZhyyYangzhichang, customArg:{}, align:"center"},
                     view:{value:iconImg.infoIcon, event:"click", eventFunc:viewZhyyYangzhichang, customArg:{}, align:"center"}
 
@@ -165,8 +167,20 @@
                 autoPos:true
 	});
     }
-
-
+    var setmoduleDialog
+    function setModule(){
+        var cellObj = e.data.arg;
+        var id = cellObj.cell.id.value
+         = new $.dialog({
+            id: 'setmoduleDialogFrame',
+            title: "设置养殖场移动端模块",
+            height: 500,
+            width: 750,
+            cover:true,
+            content: 'url:<%=path%>/con/zhyy/yangzhichang/setmodule?id=' + id,
+            autoPos:true
+        });
+    }
 
     //编辑方法
     function editZhyyYangzhichang(e) {

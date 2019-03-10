@@ -1,5 +1,6 @@
 package com.os.framework.web.controller.zhyy;
 
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
@@ -96,4 +97,15 @@ public class YangzhichangController {
         request.setAttribute("ymap", map);
         return "zhyy/yangzhichang/viewyzc";
     }
+
+	@RequestMapping(value = "/con/zhyy/yangzhichang/viewyzc", method = GET)
+	public String setModule(String yzcid, HttpServletRequest request) {
+    	MainDao dao = new MainDao();
+		String id = request.getParameter("id");
+		String sql = "select * from mbl_module ";
+		List modlist = dao.queryForList(sql,null);
+		sql = "select mbl_module_id from ";//获取已关联模块id
+		request.setAttribute("modlist",modlist);
+		return "zhyy/yangzhichang/setmodule";
+	}
 }

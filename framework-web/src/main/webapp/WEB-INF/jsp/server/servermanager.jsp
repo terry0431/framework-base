@@ -12,17 +12,27 @@
     <%@include file="../include/commontop.jsp"%>
 </head>
 <body>
-    <input type="button" onclick="shutdownServer()" value="停止收发器服务" /><br/>
-    <input type="button" onclick="shu" value="停止消息队列服务" /><br/>
-    <input type="button" onclick="shutdownServer()" value="停止WEB服务" /><br/>
+    <input type="button" onclick="shutdownServer()" value="停止服务" /><br/>
+    <a href="http://www.haihuodl.com/framework-mq/logs/debug.log">消息队列debug日志</a>
+    <a href="http://www.haihuodl.com/framework-mq/logs/info.log">消息队列info日志</a>
+    <a href="http://www.haihuodl.com/framework-mq/logs/warn.log">消息队列warn日志</a>
+    <a href="http://www.haihuodl.com/framework-mq/logs/error.log">消息队列error日志</a><br/>
+    <a href="http://www.haihuodl.com/framework-transceriver/logs/debug.log">收发器debug日志</a>
+    <a href="http://www.haihuodl.com/framework-transceriver/logs/info.log">收发器info日志</a>
+    <a href="http://www.haihuodl.com/framework-transceriver/logs/warn.log">收发器warn日志</a>
+    <a href="http://www.haihuodl.com/framework-transceriver/logs/error.log">收发器error日志</a><br/>
+    <a href="http://www.haihuodl.com/framework-web/logs/debug.log">WEB debug日志</a>
+    <a href="http://www.haihuodl.com/framework-web/logs/info.log">WEB info日志</a>
+    <a href="http://www.haihuodl.com/framework-web/logs/warn.log">WEB warn日志</a>
+    <a href="http://www.haihuodl.com/framework-web/logs/error.log">WEB error日志</a><br/>
 </body>
 <script type="text/javascript">
     var mq_server_run_url = "http://localhost:8080/framework-mq/ifs/mp/shutdown";
     var tc_server_run_url = "http://localhost:8080/framework-trancseriver/ifs/tc/shutdown";
 
-    var tc_server_shutdown_url = "http://localhost:8080/framework-transceriver/ifs/tc/shutdown";
-    var mq_server_shutdown_url = "http://localhost:8080/framework-mq/ifs/mp/shutdown";
-    var web_server_shutdown_url = "http://localhost:8080/framework-web/ifs/web/shutdownAll";
+    var tc_server_shutdown_url = "http://www.haihuodl.com/framework-transceriver/ifs/tc/shutdown";
+    var mq_server_shutdown_url = "http://www.haihuodl.com/framework-mq/ifs/mp/shutdown";
+    var web_server_shutdown_url = "http://www.haihuodl.com/framework-web/ifs/web/shutdownAll";
 
     var server_state_url = "";
 
